@@ -39,6 +39,7 @@ function App() {
 
       <main>
         <CategoryFilter setCurrentCategory={setCurrentCategory} />
+
         {isLoading ? (
           <Loader />
         ) : (
@@ -207,6 +208,16 @@ function CategoryFilter({ setCurrentCategory }) {
           </li>
         ))}
       </ul>
+      <p class="copyright">
+        &copy; Copyright by
+        <a
+          class="twitter-link"
+          target="_blank"
+          href="https://twitter.com/jonasschmedtman">
+          Jonas Schmedtmann
+        </a>
+        . Permission granted to use for portfolio purposes.
+      </p>
     </aside>
   );
 }
