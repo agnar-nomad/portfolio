@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import supabase from './supabase';
 import './styles.css';
-import { CATEGORIES, initialFacts } from './data/data.js';
+import { CATEGORIES } from './data/data.js';
+import logo from './assets/logo.png';
 
 function App() {
   const [showForm, setShowForm] = useState(false);
@@ -13,29 +14,32 @@ function App() {
     async function getFacts() {
       setIsLoading(true);
 
+      // set up database query
       let query = supabase.from('facts').select('*');
 
       if (currentCategory !== 'all') {
         query = query.eq('category', currentCategory);
       }
+      // request and destructure data
       const { data: facts, error } = await query
         .order('votesInteresting', { ascending: false })
-        .limit(1000);
-      console.log('SupaBase ERROR', error);
+        .limit(100);
+      console.log('SupaBase ERROR', error || 'no error');
 
       if (!error) setFacts(facts);
-      else alert('There was a problem getting data');
+      else {
+        alert('There was a problem getting data. Please refresh or try later.');
+      }
       setIsLoading(false);
     }
     getFacts();
   }, [currentCategory]);
+  // this useEffect will run on each change of the above state, i.e. when a user clicks a filter button
 
   return (
     <>
       <Header showForm={showForm} setShowForm={setShowForm} />
-      {showForm ? (
-        <NewFactForm setFacts={setFacts} setShowForm={setShowForm} />
-      ) : null}
+      {showForm ? <NewFactForm setFacts={setFacts} /> : null}
 
       <main>
         <CategoryFilter setCurrentCategory={setCurrentCategory} />
@@ -58,11 +62,7 @@ function Header(props) {
   return (
     <header className="header">
       <div className="logo-group">
-        <img
-          className="logo"
-          src="src/assets/logo.png"
-          alt="Today I learned custom logo"
-        />
+        <img className="logo" src={logo} alt="Today I learned custom logo" />
         <h1>Today I Learned</h1>
       </div>
 
@@ -75,14 +75,14 @@ function Header(props) {
   );
 }
 
-// destructure the props below immediately
-function NewFactForm({ setFacts, setShowForm }) {
+function NewFactForm({ setFacts }) {
   const [text, setText] = useState('');
   const [source, setSource] = useState('');
   const [category, setCategory] = useState('');
   const [isUploading, setIsUploading] = useState(false);
   const textLength = text.length;
 
+  // url validation for the source link (grabbed from stackoverflow)
   function isValidHttpUrl(string) {
     let url;
     try {
@@ -94,26 +94,14 @@ function NewFactForm({ setFacts, setShowForm }) {
   }
 
   const handleSubmit = async function (e) {
-    // 1. Prevent browser reload
     e.preventDefault();
     console.log(text, source, category);
 
-    // 2. Check data validity
+    // Check data validity
     if (text && isValidHttpUrl(source) && category && text.length <= 200) {
       console.log('Input is VALID.');
-      // 3. Create new fact object
-      // const newFact = {
-      //   id: Math.round(Math.random() * 100000000),
-      //   text: text,
-      //   source: source,
-      //   category: category,
-      //   votesInteresting: 0,
-      //   votesMindblowing: 0,
-      //   votesFalse: 0,
-      //   createdIn: new Date().getFullYear(),
-      // };
 
-      // 3. Upload fact to Supbase and update local dataset
+      // Upload fact to Supabase and update local dataset
       setIsUploading(true);
       const { data: newFact, error } = await supabase
         .from('facts')
@@ -122,18 +110,18 @@ function NewFactForm({ setFacts, setShowForm }) {
       setIsUploading(false);
 
       console.log('Return new fact:', newFact);
-      console.log('INSERT ERROR:', error);
 
-      // 4. add new fact to UI, add it to state
+      // Add new fact to UI, add it to state
       if (!error) setFacts((prevState) => [newFact[0], ...prevState]);
 
-      // 5. Reset input fields
+      // Reset input fields
       setText('');
       setCategory('');
       setSource('');
-
-      // 6. Close the whole form
-      // setShowForm((prevState) => !prevState);
+    } else {
+      console.log('INSERT ERROR:', error);
+      alert('Invalid data. Please check your input and try again.');
+      return;
     }
   };
 
@@ -141,8 +129,8 @@ function NewFactForm({ setFacts, setShowForm }) {
     <form action="" className="fact-form" onSubmit={handleSubmit}>
       <input
         type="text"
-        name=""
-        id=""
+        name="fact-text"
+        id="fact-text"
         placeholder="Share a fact"
         value={text}
         onChange={(e) => {
@@ -153,9 +141,9 @@ function NewFactForm({ setFacts, setShowForm }) {
       <span className="char-count">{200 - textLength} char left</span>
       <input
         type="text"
-        name=""
-        id=""
-        placeholder="Trustworthy source"
+        name="url-link"
+        id="url-link"
+        placeholder="Trusty source"
         value={source}
         onChange={(e) => {
           setSource(e.target.value);
@@ -209,12 +197,12 @@ function CategoryFilter({ setCurrentCategory }) {
         ))}
       </ul>
       <p class="copyright">
-        &copy; Copyright by
+        &copy; Copyright by{' '}
         <a
           class="twitter-link"
           target="_blank"
           href="https://twitter.com/jonasschmedtman">
-          Jonas Schmedtmann
+          <i>Jonas Schmedtmann</i>
         </a>
         . Permission granted to use for portfolio purposes.
       </p>
@@ -230,7 +218,6 @@ function FactList(props) {
       </p>
     );
   }
-  // no need to use the else block for the other case because the return invalidates everything after automatically anyways
 
   return (
     <section>
@@ -247,19 +234,16 @@ function FactList(props) {
   );
 }
 
-// function Fact(props) {
-// props is {factObj{data}}
 function Fact({ fact, setFacts }) {
-  {
-    /*instead of the above, destructure immediately in the argument passing step */
-  }
   const [isUpdating, setIsUpdating] = useState(false);
 
+  // if more False votes then good ones, it will render differently
   const isDisputed =
     fact.votesInteresting + fact.votesMindblowing < fact.votesFalse;
 
   async function handleVote(columnName) {
     setIsUpdating(true);
+    // send and update the corresponding column on the corresponding fact(row)
     const { data: updatedFact, error } = await supabase
       .from('facts')
       .update({ [columnName]: fact[columnName] + 1 })
@@ -280,7 +264,7 @@ function Fact({ fact, setFacts }) {
           <span className="disputed">[💥 DISPUTED Fact]</span>
         ) : null}
         {fact.text}
-        <a className="source-link" href={fact.source} target="_blank">
+        <a className="source-link" href={fact.source_link} target="_blank">
           (Source)
         </a>
       </p>

@@ -1,15 +1,14 @@
-# Mapty demo app
+# Today I Learned demo app
 
-This is a project built during the Complete JavaScript Course presented by [Jonas Schmedtmann](https://twitter.com/jonasschmedtman), accessed on Udemy.
+This is a project built during the Complete WebDev Crash Course presented by [Jonas Schmedtmann](https://twitter.com/jonasschmedtman), accessed on Udemy.
 
-The project was built in Vanilla Javascript, HTML and CSS, using the open-source [Leaflet](https://leafletjs.com/) JS library. The code utilises the OOP principles for better organisation and readability. The app is not perfectly optimised for portrait mode of hand-held devices.
+The project was built in React 18, with Vite 4, and using a free tier database of [Supabase](https://supabase.com/). The code is rather simple, kept in one file, serves the purpose of a learning project perfectly. It utilises ES6 imports for external libraries, but components are kept in App.js. Data is being kept in sync using the Supabase database, so data is persistent.
 
-#### The app is a workout tracker, a diary of sort. Add your workouts (either Running or Cycling) and they will be saved as a pin on a map location, together with some additional data provided by you. The app keeps a history of the workouts so you can come back to see how you are progressing in your workout goals.
+#### The app is a dashboard/drawer/data source of interesting ideas that you would like to rememeber and have written down. It is a collection facts, that can be filtered and voted on. Facts can also be added manually to extend the database.
 
 ### Usage
 
-- Open the app and allow GPS location access
-- Upon the map opening, start adding entries by clicking on a location on the map
-- The location will be marked and an input form shows for you to add some details of your workout
-- Submit with the Enter key and the workout will be saved on your device's browser (stored in the browser's localStorage), meaning you can close the app, come back later and your data will be still available
-- Click on a saved workout in the left-hand-side list to bring it up on the map
+- Open the app and browse through the facts available already
+- Vote on the facts if you want, choose Great, Mindblowing, or False
+- Fact list can be filtered using the provided buttons
+- A new fact can be easily added using the Share Fact button, simply add text, a link to the source and choose a category
