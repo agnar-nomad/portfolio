@@ -2,7 +2,7 @@
 
 This is a project built during the Complete JavaScript Course presented by [Jonas Schmedtmann](https://twitter.com/jonasschmedtman), accessed on Udemy.
 
-The project was built in Vanilla Javascript, HTML and CSS, using the open-source [Leaflet](https://leafletjs.com/) JS library. The code utilises the OOP principles for better organisation and readability. The app is not perfectly optimised for portrait mode of hand-held devices.
+The project was built in Vanilla Javascript, HTML and CSS, using the open-source [Leaflet](https://leafletjs.com/) JS library. The code utilises the OOP principles for better organisation and readability.
 
 #### The app is a workout tracker, a diary of sort. Add your workouts (either Running or Cycling) and they will be saved as a pin on a map location, together with some additional data provided by you. The app keeps a history of the workouts so you can come back to see how you are progressing in your workout goals.
 
