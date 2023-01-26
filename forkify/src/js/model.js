@@ -1,6 +1,5 @@
 import { async } from 'regenerator-runtime';
 import { API_URL, RES_PER_PAGE, API_KEY } from './config';
-// import { getJSON, sendJSON } from './helpers';
 import { AJAX } from './helpers';
 
 export const state = {
@@ -15,7 +14,7 @@ export const state = {
 };
 
 const createRecipeObject = function (data) {
-  const { recipe } = data.data; // get the awaited data by destruc
+  const { recipe } = data.data;
   // store data to state
   return {
     id: recipe.id,
@@ -38,9 +37,8 @@ export const loadRecipe = async function (id) {
     if (state.bookmarks.some(bookmark => bookmark.id === id))
       state.recipe.bookmarked = true;
     else state.recipe.bookmarked = false;
-    console.log('✅ line 31: ', state.recipe);
+    console.log('✅ line 40: ', state.recipe);
   } catch (err) {
-    console.log('💥💥 line 33: ', err);
     throw err;
   }
 };
@@ -57,17 +55,17 @@ export async function loadSearchResults(query) {
         publisher: recipe.publisher,
         sourceUrl: recipe.source_url,
         image: recipe.image_url,
-        ...(recipe.key && { key: recipe.key }),
+        ...(recipe.key && { key: recipe.key }), // if there is a key, add it
       };
     });
 
-    state.search.page = 1;
+    state.search.page = 1; // reset pagination
   } catch (err) {
-    console.log('💥💥 line 53: ', err);
     throw err;
   }
 }
 
+// pagination helper
 export const getSearchResultsPage = function (page = state.search.page) {
   state.search.page = page;
   const start = (page - 1) * 10; // 0;
@@ -113,11 +111,6 @@ const init = function () {
 };
 init();
 
-const clearBookmarks = function () {
-  localStorage.clear('bookmarks');
-};
-// clearBookmarks();
-
 export const uploadRecipe = async function (newRecipe) {
   try {
     // 1, Transform ingredients data
@@ -134,7 +127,6 @@ export const uploadRecipe = async function (newRecipe) {
 
         return { quantity: quantity ? +quantity : null, unit, description };
       });
-    console.log('line 121: ', ingredients);
 
     // 2. transform recipe into a format that the API expects
     const recipe = {
@@ -146,7 +138,6 @@ export const uploadRecipe = async function (newRecipe) {
       servings: +newRecipe.servings,
       ingredients,
     };
-    console.log('line 143: ', recipe);
 
     const data = await AJAX(`${API_URL}?key=${API_KEY}`, recipe);
     state.recipe = createRecipeObject(data);

@@ -128,8 +128,7 @@
             target="_blank"
             href="https://twitter.com/jonasschmedtman"
             >Jonas Schmedtmann</a
-          >. Use for learning or your portfolio. Don't use to teach. Don't claim
-          as your own.
+          >. Permission granted to use for portfolio.
         </p>
       </div>
 
@@ -263,24 +262,23 @@
         <div class="upload__column">
           <h3 class="upload__heading">Recipe data</h3>
           <label>Title</label>
-          <input value="TESTingIt" required name="title" type="text" />
-          <label>URL</label>
-          <input value="TESTingIt" required name="sourceUrl" type="text" />
+          <input required name="title" type="text" />
+          <label>Original URL</label>
+          <input required name="sourceUrl" type="text" />
           <label>Image URL</label>
-          <input value="TESTingIt" required name="image" type="text" />
+          <input required name="image" type="text" />
           <label>Publisher</label>
-          <input value="TESTingIt" required name="publisher" type="text" />
-          <label>Prep time</label>
-          <input value="23" required name="cookingTime" type="number" />
+          <input required name="publisher" type="text" />
+          <label>Preparation time (minutes)</label>
+          <input required name="cookingTime" type="number" />
           <label>Servings</label>
-          <input value="23" required name="servings" type="number" />
+          <input required name="servings" type="number" />
         </div>
 
         <div class="upload__column">
           <h3 class="upload__heading">Ingredients</h3>
           <label>Ingredient 1</label>
           <input
-            value="0.5,kg,Rice"
             type="text"
             required
             name="ingredient-1"
@@ -288,14 +286,12 @@
           />
           <label>Ingredient 2</label>
           <input
-            value="1,,Avocado"
             type="text"
             name="ingredient-2"
             placeholder="Format: 'Quantity,Unit,Description'"
           />
           <label>Ingredient 3</label>
           <input
-            value=",,salt"
             type="text"
             name="ingredient-3"
             placeholder="Format: 'Quantity,Unit,Description'"

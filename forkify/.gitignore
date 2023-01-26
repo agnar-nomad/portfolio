@@ -1,4 +1,4 @@
 node_modules/
 dist/
 .env
-.parcel_cacve/
+.parcel-cache/

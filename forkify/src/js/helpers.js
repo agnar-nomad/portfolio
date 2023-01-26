@@ -10,6 +10,7 @@ const timeout = function (s) {
 
 export async function AJAX(url, uploadData = undefined) {
   try {
+    // universal template for FETCH or POST
     const fetchPro = uploadData
       ? fetch(url, {
           method: 'POST',
@@ -20,6 +21,7 @@ export async function AJAX(url, uploadData = undefined) {
         })
       : fetch(url);
 
+    // dont let it go too long
     const res = await Promise.race([fetchPro, timeout(TIMEOUT_SECONDS)]);
     const data = await res.json();
 

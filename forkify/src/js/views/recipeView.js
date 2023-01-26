@@ -18,8 +18,6 @@ class RecipeView extends View {
       const btn = e.target.closest('.btn--update-servings');
       if (!btn) return;
 
-      // console.log('line 20: ', btn);
-
       const { updateTo } = btn.dataset;
       if (+updateTo > 0) handler(+updateTo);
     });
@@ -34,7 +32,6 @@ class RecipeView extends View {
     });
   }
 
-  // TODO convert unit numbers using Fracty inside markup
   _generateMarkup() {
     return `
         <figure class="recipe__fig">
@@ -145,8 +142,3 @@ class RecipeView extends View {
 }
 
 export default new RecipeView();
-
-// Event listeners
-// window.addEventListener('hashchange', controlRecipes);
-// window.addEventListener('load', controlRecipes);
-// ['hashchange', 'load'].forEach(e => window.addEventListener(e, controlRecipes));

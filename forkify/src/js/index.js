@@ -7,12 +7,12 @@ import bookmarksView from './views/bookmarksView.js';
 import addRecipeView from './views/addRecipeView.js';
 import { MODAL_CLOSE_SECONDS } from './config.js';
 
-import 'core-js/stable'; // general polyfilling
-import 'regenerator-runtime/runtime'; // polyfilling async/await
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 
 // https://forkify-api.herokuapp.com/v2
 
-///////////////////////////////////////
+/////////////////////////////////
 
 async function controlRecipes() {
   try {
@@ -47,13 +47,12 @@ const controlSearchResults = async function () {
     await model.loadSearchResults(query);
 
     // 3, Render results
-    // resultsView.render(model.state.search.result);
     resultsView.render(model.getSearchResultsPage());
 
     // 4, Render initial pagination buttons
     paginationView.render(model.state.search);
   } catch (err) {
-    console.log('line 49: ', err);
+    console.log('line 55: ', err);
   }
 };
 
@@ -70,7 +69,6 @@ const controlServings = function (newServings) {
   model.updateServings(newServings);
 
   // Update the recipe view
-  // recipeView.render(model.state.recipe);
   recipeView.update(model.state.recipe);
 };
 
@@ -97,7 +95,6 @@ const controlAddRecipe = async function (newRecipe) {
 
     // Upload new recipe data
     await model.uploadRecipe(newRecipe);
-    console.log('line 96: ', model.state.recipe);
 
     // Render recipe
     recipeView.render(model.state.recipe);
@@ -116,7 +113,6 @@ const controlAddRecipe = async function (newRecipe) {
       addRecipeView.toggleWindow();
     }, MODAL_CLOSE_SECONDS * 1000);
   } catch (error) {
-    console.log('line 98: 💥💥💥', error);
     addRecipeView.renderError(error.message);
   }
 };
