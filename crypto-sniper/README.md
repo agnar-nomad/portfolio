@@ -1,23 +1,17 @@
-# UnAbleton
+# Crypto Sniper
 
-This is a Frontend Practice project where the task is to recreate the Ableton About page design in 2021/2022.
+This is a cryptocurrency tracking app project which is largely based on the Youtube tutorial from [Roadside Coder](https://www.youtube.com/@RoadsideCoder). More precisely, this project [Part 1](https://www.youtube.com/watch?v=QA6oTpMZp84) and [Part 2](https://www.youtube.com/watch?v=8NMJxyDwP6A). However, there are rather substantial improvements in how styling is written and organised, in error handling component life cycles and a modest change in design.
 
-Link to FEP task
-https://www.frontendpractice.com/projects/ableton
+The project was built in React 17, with Material UI v4, a free tier version of [Firebase](https://firebase.google.com/) v9 and a suite of other third-party libraries that make development simpler and faster. Data is being feched from the free [Coingecko API](https://www.coingecko.com/en/api/documentation). This project helped me learn many new concepts (e.g. React context, advanced state management, ES6 import management, discovering new libraries, components in components in components...) but also that working with a UI library is sometimes like learning a new language.
 
-Link to the original source live page, as of Dec 16, 2022
-https://www.ableton.com/en/about/
+#### The app is a list of cryptocurrencies (fetched from CoinGecko) shown in a paginated view, with the possibility of searching for particular coins. The app provides also more detailed info on single cryptocurrencies, including rank, description or historical charts. Users can also create an account with the app and use the tracker (or watchlist) feature while being signed in.
 
-This is a good project to show I am able to build more complicated layouts. The top menu was an interesting challenge. The project uses only HTML, CSS and Vanilla JS.
+### Usage
 
-The body uses a nice element of image collages.
-
-The footer uses a grid layout where the mobile version changes the order of the sections (pop up the newsletter signup to the first place), while the desktop version places the sections into a 3-repeat column layout, where the newsletter field is in the 3rd position.
-
-The menu bars were the real CHALLENGE.
-Building the hidden mobile menu was alright, where JS helps me unhide the menu on a click.
-The desktop version was much more difficult, because the multi level organisation is very finicky. I know I did not do it the same way as they had, but it works. I managed to make the multi-level showing menu with the conditionally hidden buttons as well.
-
-The website is responsive on mobile, its not perfect but is 100% usable.
-
-The code can be certainly improved, the CSS could be more DRY.
+- Browse the list of cryptocurrencies ordered by market cap, in a paginated list view
+- View the currently top trending coins and their price in the top banner
+- Change the currency in which to view crypto prices, using the available options in the top bar
+- Clicking a cryptocurrency opens a details page with more data on them, including some history, rank, charts and the possibility to add to a watchlist
+- Use the search bar to look up a favourite crypto coin from the list and display it immediately on the results
+- Create an account on the app, using email/password or using GoogleAuth
+- Authenticated users can use the Watchlist feature and save their favourite coins in their personal list
