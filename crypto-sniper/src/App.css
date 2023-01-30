@@ -1,0 +1,23 @@
+/* CSS RESET */
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+a {
+  font-weight: 500;
+  text-decoration: none;
+}
+a:hover {
+  cursor: pointer;
+  color: lightgoldenrodyellow;
+}
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+}
