@@ -8,7 +8,7 @@ https://www.frontendpractice.com/projects/ableton
 Link to the original source live page, as of Dec 16, 2022
 https://www.ableton.com/en/about/
 
-This is a good project to show I am able to build more complicated layouts. The top menu was an interesting challenge. The project uses only HTML, CSS and Vanilla JS.
+This is a perfect project to manifest my ability to build more complicated layouts. The top menu was an interesting challenge. The project uses only HTML, CSS and Vanilla JS.
 
 The body uses a nice element of image collages.
 
@@ -19,5 +19,3 @@ Building the hidden mobile menu was alright, where JS helps me unhide the menu o
 The desktop version was much more difficult, because the multi level organisation is very finicky. I know I did not do it the same way as they had, but it works. I managed to make the multi-level showing menu with the conditionally hidden buttons as well.
 
 The website is responsive on mobile, its not perfect but is 100% usable.
-
-The code can be certainly improved, the CSS could be more DRY.
