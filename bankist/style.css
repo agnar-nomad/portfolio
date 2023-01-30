@@ -24,9 +24,20 @@ nav {
   padding: 0 2rem;
 }
 
+.welcome-div {
+  display: flex;
+  flex-direction: column;
+}
 .welcome {
   font-size: 1.9rem;
   font-weight: 500;
+}
+.demo-text {
+  margin: 0.1em 0;
+  color: #e52a5a;
+}
+.demo-text p {
+  font-weight: bold;
 }
 
 .logo {
@@ -89,13 +100,6 @@ nav {
 
   opacity: 0;
   transition: all 1s;
-}
-.demo-text {
-  margin: 1em 0;
-  color: #e52a5a;
-}
-.demo-text p {
-  font-weight: bold;
 }
 
 .balance {

@@ -222,7 +222,6 @@ const startLogOutTimer = function () {
 
 //* Event handlers
 //* implement LOGIN
-
 let currentUser, timer;
 btnLogin.addEventListener('click', function (e) {
   e.preventDefault();
