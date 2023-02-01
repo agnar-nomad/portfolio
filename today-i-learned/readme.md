@@ -6,6 +6,8 @@ The project was built in React 18, with Vite 4, and using a free tier database o
 
 #### The app is a dashboard/drawer/data source of interesting ideas that you would like to rememeber and have written down. It is a collection facts, that can be filtered and voted on. Facts can also be added manually to extend the database.
 
+A live demo is available at this [URL](https://today-i-learned-demo-agnar.netlify.app/).
+
 ### Usage
 
 - Open the app and browse through the facts available already

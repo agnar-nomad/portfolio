@@ -6,6 +6,8 @@ The project was built in Vanilla Javascript using the latest ES6+ features, HTML
 
 #### The app is a collector's tool to find and store recipes for themselves. It accesses an impressive collection of recipes and makes it easy to see them, access them and save them for later use. Users can search, store or add recipes into the database.
 
+A live demo is available at this [URL](https://forkify-demo-agnar.netlify.app/).
+
 ### Features
 
 - Search for a desired keyword(s) and browse recipes in the left panel, then view details in the right panel

@@ -6,6 +6,8 @@ The project was built in Vanilla Javascript, HTML and CSS, using the open-source
 
 #### The app is a workout tracker, a diary of sort. Add your workouts (either Running or Cycling) and they will be saved as a pin on a map location, together with some additional data provided by you. The app keeps a history of the workouts so you can come back to see how you are progressing in your workout goals.
 
+A live demo is available at this [URL](https://mapty-demo-agnar.netlify.app/).
+
 ### Usage
 
 - Open the app and allow GPS location access

@@ -1,10 +1,12 @@
 # Crypto Sniper
 
-This is a cryptocurrency tracking app project which is largely based on the Youtube tutorial from [Roadside Coder](https://www.youtube.com/@RoadsideCoder). More precisely, this project [Part 1](https://www.youtube.com/watch?v=QA6oTpMZp84) and [Part 2](https://www.youtube.com/watch?v=8NMJxyDwP6A). However, there are rather substantial improvements in how styling is written and organised, in error handling component life cycles and a modest change in design.
+This is a cryptocurrency tracking app project which is largely based on the Youtube tutorial from [Roadside Coder](https://www.youtube.com/@RoadsideCoder). More precisely, this project [Part 1](https://www.youtube.com/watch?v=QA6oTpMZp84) and [Part 2](https://www.youtube.com/watch?v=8NMJxyDwP6A). However, there are rather substantial improvements in how styling is written and organised, in error handling component life cycles and a modest changes in design.
 
 The project was built in React 17, with Material UI v4, a free tier version of [Firebase](https://firebase.google.com/) v9 and a suite of other third-party libraries that make development simpler and faster. Data is being feched from the free [Coingecko API](https://www.coingecko.com/en/api/documentation). This project helped me learn many new concepts (e.g. React context, advanced state management, ES6 import management, discovering new libraries, components in components in components...) but also that working with a UI library is sometimes like learning a new language.
 
 #### The app is a list of cryptocurrencies (fetched from CoinGecko) shown in a paginated view, with the possibility of searching for particular coins. The app provides also more detailed info on single cryptocurrencies, including rank, description or historical charts. Users can also create an account with the app and use the tracker (or watchlist) feature while being signed in.
+
+A live demo is available at this [URL](https://crypto-sniper-demo-agnar.netlify.app/).
 
 ### Usage
 

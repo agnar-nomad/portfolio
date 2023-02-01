@@ -4,7 +4,7 @@ This is a working demo version of a blockchain portfolio app, being built for th
 
 #### The app is an overview/dashboard app for a web3 project's assets and another way to connect with its community. It shows the current state of the treasury (coins and NFTs) holdings on the Avax network. Other chains are planned to be added as the project expands, to eventually build a total aggregator of cross-chain assets. Staking and Liquidity Provider positions will be added as well. Another feature is the User portfolio which enables a user to easily check and see which collections of this project they are holding currently.
 
-A live demo is available at this [URL]().
+A live demo is available at this [URL](https://cloudheadz-portfolio-demo-agnar.netlify.app/).
 
 The project was built in React 18, with Vite 3.2, and libraries like ethers, wagmi, ankr.js or react-lazy-load-image. Parts of this app were inspired by [Hashlips](https://hashlips.online/HashLips)
 

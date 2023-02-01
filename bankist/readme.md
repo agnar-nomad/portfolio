@@ -5,6 +5,8 @@ The project was built in Vanilla Javascript, HTML and CSS.
 
 #### The app is a simple Internet Banking App simulator. Pre-existing users can transfer money, request a loan and check their balance or transaction history. A login timeout (as a security feature) has been implemented, which will log users out after a certain time of inactivity.
 
+A live demo is available at this [URL](https://bankist-demo-agnar.netlify.app/).
+
 ### Usage
 
 - Login using one of the demo accounts as shown on the page
