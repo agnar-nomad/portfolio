@@ -1,0 +1,98 @@
+.home__container {
+  width: 100%;
+  height: calc(100vh - 3.5rem);
+  /* background: var(--gradient); */
+  position: relative;
+}
+.home__container::after {
+  content: '';
+  bottom: 0;
+  right: -7%;
+  height: 90vh;
+  width: 90vh;
+  position: absolute;
+  background-image: url('../assets/images/ch-hero-shot.png');
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: contain;
+  z-index: 0;
+  display: none;
+}
+
+.hero {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  height: 100%;
+  position: relative;
+  z-index: 5;
+}
+
+.hero__text {
+  text-align: center;
+  max-width: 500px;
+}
+.hero__text__title {
+  color: white;
+  font-family: 'Aquire', sans-serif;
+  font-weight: 400;
+}
+.hero__text__description {
+  font-family: Arapey;
+  font-weight: 400;
+  margin: 1.2em 0;
+}
+@media screen and (min-width: 1024px) {
+  .home__container::after {
+    display: block;
+  }
+  .hero {
+    justify-items: left;
+    padding-left: 3vw;
+  }
+}
+
+.hero__card {
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  color: white;
+  background-color: var(--bg-secondary);
+  box-shadow: -2px -2px 15px 2px rgba(20, 20, 20, 0.3);
+  text-align: center;
+}
+.hero__card__title {
+  font-size: 2.2rem;
+  padding: 0.5em;
+}
+.hero__card__subtitle {
+  padding-bottom: 0.5em;
+}
+.hero__card__coin {
+  margin: 0.5em 0;
+  display: grid;
+  grid-template-columns: 100px 150px;
+  /* grid-auto-columns: 100px 150px; */
+  align-items: center;
+  justify-items: left;
+  gap: 1em;
+}
+.coin__name {
+  font-weight: 700;
+  padding: 0.25em;
+  justify-self: right;
+}
+.coin__value {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.hero__card__summary {
+  margin: 0.9em;
+}
+.hero__card__summary__value {
+  font-weight: 700;
+  padding: 0.5em 0;
+  font-size: 1.1rem;
+}

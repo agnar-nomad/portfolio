@@ -1,0 +1,27 @@
+:root {
+  --bg-main: #002b40;
+  --accent-one: #bd192c;
+  --accent-two: ##faad5b;
+  --accentr-three: #7a3f68;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: white;
+}
+section {
+  display: block;
+}
+nav {
+  background: linear-gradient(to bottom, var(--accentr-three) 35%, transparent);
+}
+.hero {
+  background-image: url('./assets/images/hero-baddy.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#mint {
+  background: linear-gradient(to top, var(--bg-main) 40%, var(--accent-one));
+}

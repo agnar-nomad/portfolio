@@ -1,0 +1,33 @@
+.gallery-card {
+  width: clamp(150px, 30vw, 280px);
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-card__head {
+  position: relative;
+  text-align: center;
+}
+.gallery-card__head__logo {
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+}
+.gallery-card__head__counter {
+  position: absolute;
+  top: 15px;
+  right: -8px;
+  font-size: 12px;
+}
+.gallery-card__nft-image {
+  width: clamp(150px, 20vw, 200px);
+  border-radius: 5px;
+  cursor: pointer;
+}
+.gallery-card__nft-text {
+  text-align: center;
+  margin-top: 10px;
+}

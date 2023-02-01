@@ -1,0 +1,38 @@
+:root {
+  --main-logo-size: 100px;
+}
+header {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  background-color: var(--bg);
+  height: calc(var(--main-logo-size) + 1rem);
+  font-family: Metrophobic, sans-serif;
+  font-weight: 400;
+}
+nav {
+  height: 100%;
+}
+.logo {
+  height: var(--main-logo-size);
+  width: var(--main-logo-size);
+}
+.navbar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  padding: 0.5rem 1rem;
+}
+.navbar a {
+  text-decoration: none;
+  color: grey;
+  text-transform: uppercase;
+  font-size: 80%;
+}
+.white.white {
+  color: var(--text);
+}
+.navbar a:is(:hover, :focus) {
+  color: var(--accent);
+}
