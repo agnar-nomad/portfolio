@@ -11,7 +11,7 @@ A Twitter/X clone based on a youtube video published by the channel [Web Dev Sim
 - [Tailwind CSS](https://tailwindcss.com)
 - [tRPC](https://trpc.io)
 
-I also used [Supabase](https://supabase.com) for a cloud DB, which is ran from a free tier account.
+I also used [Supabase](https://supabase.com) for a cloud DB, which is created on a free tier account.
 
 ## Features
 
@@ -25,3 +25,6 @@ I also used [Supabase](https://supabase.com) for a cloud DB, which is ran from a
 - Infinite scrolling and real time updates
 
 ## Demo
+
+You can view the app on the following URL: [https://tweedder.vercel.app](https://tweedder.vercel.app)
+Log in using a Discord account and create tweets, view feeds, like posts, follow users
