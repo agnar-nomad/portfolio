@@ -85,7 +85,6 @@ function Form() {
           ref={textAreaRef}
           className="flex-grow h-4 p-4 resize-none overflow-hidden text-lg outline-none"
           placeholder="What's happening?"
-          style={{ height: 0 }}
           onChange={e => setInputValue(e.target.value)}
           value={inputValue}
         ></textarea>
