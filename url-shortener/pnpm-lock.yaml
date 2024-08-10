@@ -68,6 +68,9 @@ dependencies:
   usehooks-ts:
     specifier: ^3.1.0
     version: 3.1.0(react@18.3.1)
+  valibot:
+    specifier: ^0.37.0
+    version: 0.37.0(typescript@5.5.4)
   yup:
     specifier: ^1.4.0
     version: 1.4.0
@@ -3164,7 +3167,6 @@ packages:
     resolution: {integrity: sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==}
     engines: {node: '>=14.17'}
     hasBin: true
-    dev: true
 
   /ua-parser-js@2.0.0-beta.3:
     resolution: {integrity: sha512-vZkEG/GplLRxj4XVrjLUQpSNg9Qj9RdnIqrOy8dqrLP1e5x7i2N8RfVYlWRbKEZdDSWfeWNcWS38gmieX03/5A==}
@@ -3234,6 +3236,17 @@ packages:
 
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
+
+  /valibot@0.37.0(typescript@5.5.4):
+    resolution: {integrity: sha512-FQz52I8RXgFgOHym3XHYSREbNtkgSjF9prvMFH1nBsRyfL6SfCzoT1GuSDTlbsuPubM7/6Kbw0ZMQb8A+V+VsQ==}
+    peerDependencies:
+      typescript: '>=5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      typescript: 5.5.4
+    dev: false
 
   /victory-vendor@36.9.2:
     resolution: {integrity: sha512-PnpQQMuxlwYdocC8fIJqVXvkeViHYzotI+NJrCuav0ZYFoq912ZHBk3mCeuj+5/VpodOjPe1z0Fk2ihgzlXqjQ==}

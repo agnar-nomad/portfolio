@@ -5,9 +5,9 @@ import './index.css'
 
 // TODO transform to TS
 // TODO transform to React Query
-// TODO changeyup for Valibot
+// TODO change yup for Valibot
 // TODO rebrand and change images
-// TODO
+// TODO add demo data and show demo account info on HOmepage
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
