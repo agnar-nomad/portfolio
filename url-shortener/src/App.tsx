@@ -1,35 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { createBrowserRouter } from 'react-router-dom';
+import AppLayout from './layouts/app-layout';
+import LandingPage from './pages/landing';
+import DashboardPage from './pages/dashboard';
+import AuthPage from './pages/auth';
+import LinkPage from './pages/link';
+import RedirectLinkPage from './pages/redirect-link';
+import { RouterProvider } from 'react-router-dom';
+import UrlProvider from './context';
+import RequireAuth from './components/require-auth';
 
-function App() {
-  const [count, setCount] = useState(0)
+const router = createBrowserRouter([
+  {
+    element: <AppLayout />,
+    // TODO add error boundary
+    children: [
+      {
+        path: '/',
+        element: <LandingPage />,
+      },
+      {
+        path: '/dashboard',
+        // protected route
+        element: (
+          <RequireAuth>
+            <DashboardPage />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: '/auth',
+        element: <AuthPage />,
+      },
+      {
+        path: '/link/:id',
+        // protected route
+        element: (
+          <RequireAuth>
+            <LinkPage />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: '/:id',
+        element: <RedirectLinkPage />,
+      },
+    ],
+  },
+]);
 
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <UrlProvider>
+      <RouterProvider router={router} />
+    </UrlProvider>
+  );
 }
-
-export default App

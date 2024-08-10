@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 
-// TODO to transform TS
+// TODO transform to TS
 // TODO transform to React Query
 // TODO changeyup for Valibot
 // TODO rebrand and change images
