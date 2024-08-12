@@ -12,14 +12,14 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { LogOut } from 'lucide-react';
 import { LinkIcon } from 'lucide-react';
-import { UrlState } from '@/context';
 import useFetch from '@/hooks/use-fetch';
 import { logout } from '@/db/api-auth';
 import { BarLoader } from 'react-spinners';
+import { useUser } from '@/lib/apiHooks';
 
 export default function Header() {
   const navigate = useNavigate();
-  const { user, fetchUser } = UrlState();
+  const { user, } = useUser();
 
   const { loading, fn: logoutFn } = useFetch(logout);
 
@@ -27,7 +27,7 @@ export default function Header() {
 
   const handleLogout = () => {
     logoutFn().then(() => {
-      fetchUser();
+      // fetchUser();
       navigate('/');
     });
   };

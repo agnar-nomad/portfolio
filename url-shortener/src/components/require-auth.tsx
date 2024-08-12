@@ -2,19 +2,19 @@
 
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { UrlState } from '@/context';
 import { BarLoader } from 'react-spinners';
+import { useUser } from '@/lib/apiHooks';
 
 export default function RequireAuth({ children }) {
   const navigate = useNavigate();
 
-  const { loading, isAuthenticated } = UrlState();
+  const { isLoading, isAuthenticated } = useUser();
 
   useEffect(() => {
-    if (!isAuthenticated && loading === false) navigate('/auth');
-  }, [isAuthenticated, loading]);
+    if (!isAuthenticated && isLoading === false) navigate('/auth');
+  }, [isAuthenticated, isLoading]);
 
-  if (loading) return <BarLoader width={'100%'} color="#36d7b7" />;
+  if (isLoading) return <BarLoader width={'100%'} color="#36d7b7" />;
 
   if (isAuthenticated) return children;
 }

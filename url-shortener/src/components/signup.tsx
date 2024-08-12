@@ -17,7 +17,6 @@ import { useEffect } from 'react';
 import { signupSchema } from '@/lib/schemas';
 import { useNavigate } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
-import { UrlState } from '@/context';
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -47,12 +46,10 @@ export default function Signup() {
     fn: signupFunc,
   } = useFetch(signup, formData);
 
-  const { fetchUser } = UrlState();
-
   useEffect(() => {
     if (signupError == null && signupData) {
       navigate(`/dashboard?${longLink ? `createNew=${longLink}` : ''}`);
-      fetchUser();
+      // fetchUser();
     }
   }, [signupData, signupError, signupLoading]);
 

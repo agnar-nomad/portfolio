@@ -1,3 +1,5 @@
+import type { User as SupabaseAuthUser } from '@supabase/supabase-js';
+
 export type Json =
   | string
   | number
@@ -182,6 +184,8 @@ export type Enums<
   : PublicEnumNameOrOptions extends keyof PublicSchema['Enums']
   ? PublicSchema['Enums'][PublicEnumNameOrOptions]
   : never;
+
+export type User = SupabaseAuthUser;
 
 export type URLsTypeDefinition = Database['public']['Tables']['urls'];
 export type ClicksTypeDefinition = Database['public']['Tables']['clicks'];

@@ -1,4 +1,3 @@
-import { UrlState } from '@/context';
 import { getClicksForSingleUrl } from '@/db/api-clicks';
 import { deleteUrl, getSingleUrl } from '@/db/api-urls';
 import useFetch from '@/hooks/use-fetch';
@@ -11,17 +10,15 @@ import { BarLoader, BeatLoader } from 'react-spinners';
 import { Button } from '@/components/ui/button';
 import {
   Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
+  CardContent, CardHeader,
+  CardTitle
 } from '@/components/ui/card';
 import LocationStats from '@/components/location-stats';
 import DeviceStats from '@/components/device-stats';
+import { useUser } from '@/lib/apiHooks';
 
 export default function LinkPage() {
-  const { user } = UrlState();
+  const { user } = useUser();
   const { id } = useParams();
   const navigate = useNavigate();
 

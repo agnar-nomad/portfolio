@@ -3,8 +3,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Login from '@/components/login';
 import Signup from '@/components/signup';
 import { useNavigate } from 'react-router-dom';
-import { UrlState } from '@/context';
 import { useEffect } from 'react';
+import { useUser } from '@/lib/apiHooks';
 
 export default function AuthPage() {
   const [searchParams] = useSearchParams();
@@ -12,15 +12,15 @@ export default function AuthPage() {
   const longLink = searchParams.get('createNew');
   const navigate = useNavigate();
 
-  const { loading, isAuthenticated } = UrlState();
+  const { isLoading, isAuthenticated } = useUser();
 
   useEffect(() => {
-    if (isAuthenticated && !loading) {
+    if (isAuthenticated && !isLoading) {
       navigate(`/dashboard?${longLink ? `createNew=${longLink}` : ''}`);
     }
 
-    return () => {};
-  }, [loading, isAuthenticated]);
+    return () => { };
+  }, [isLoading, isAuthenticated]);
 
   return (
     <div className="mt-20 flex flex-col items-center gap-10">

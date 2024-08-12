@@ -1,4 +1,3 @@
-import { UrlState } from '@/context';
 import { useSearchParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -21,9 +20,10 @@ import { createUrl } from '@/db/api-urls';
 import { BeatLoader } from 'react-spinners';
 import { createNewLinkSchema } from '@/lib/schemas';
 import { useEffect } from 'react';
+import { useUser } from '@/lib/apiHooks';
 
 export default function CreateLink() {
-  const { user } = UrlState();
+  const { user } = useUser();
   const navigate = useNavigate();
   const qrCodeRef = useRef(null);
   const [searchParams, setSearchParams] = useSearchParams();

@@ -1,3 +1,6 @@
+import { useMemo } from 'react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { createBrowserRouter } from 'react-router-dom';
 import AppLayout from './layouts/app-layout';
 import LandingPage from './pages/landing';
@@ -6,12 +9,12 @@ import AuthPage from './pages/auth';
 import LinkPage from './pages/link';
 import RedirectLinkPage from './pages/redirect-link';
 import { RouterProvider } from 'react-router-dom';
-import UrlProvider from './context';
 import RequireAuth from './components/require-auth';
 
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
+    // errorElement: <ErrorPage />,
     // TODO add error boundary
     children: [
       {
@@ -49,9 +52,15 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
+
+  const queryClient = useMemo(() => new QueryClient({}), [])
+
   return (
-    <UrlProvider>
-      <RouterProvider router={router} />
-    </UrlProvider>
+    <>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </>
   );
 }

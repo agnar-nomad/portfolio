@@ -3,7 +3,6 @@ import { BarLoader } from 'react-spinners';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Filter } from 'lucide-react';
-import { UrlState } from '@/context';
 import useFetch from '@/hooks/use-fetch';
 import { getUrls } from '@/db/api-urls';
 import { getClicksForUrls } from '@/db/api-clicks';
@@ -11,11 +10,13 @@ import { useEffect } from 'react';
 import InputError from '@/components/input-error';
 import LinkCard from '@/components/link-card';
 import CreateLink from '@/components/create-link';
+import { useUser } from '@/lib/apiHooks';
 
 export default function DashboardPage() {
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { user } = UrlState();
+  const { user } = useUser()
+
   const {
     loading: urlsLoading,
     error: urlsError,
