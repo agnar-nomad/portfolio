@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/card';
 import LocationStats from '@/components/location-stats';
 import DeviceStats from '@/components/device-stats';
-import { useUser } from '@/lib/apiHooks';
+import { useUser } from '@/hooks/api-hooks';
 
 export default function LinkPage() {
   const { user } = useUser();

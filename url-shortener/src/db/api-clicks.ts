@@ -29,11 +29,11 @@ export async function getClicksForSingleUrl(urlId) {
   return data;
 }
 
-const parser = new UAParser(); // user agent parser
+const userAgentParser = new UAParser(); // user agent parser
 
 export async function storeClicks({ id, originalUrl }) {
   try {
-    const res = parser.getResult();
+    const res = userAgentParser.getResult();
     const device = res.type || 'desktop';
 
     const ipData = await fetch('https://ipapi.co/json');

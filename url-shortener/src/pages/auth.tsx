@@ -4,7 +4,7 @@ import Login from '@/components/login';
 import Signup from '@/components/signup';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useUser } from '@/lib/apiHooks';
+import { useUser } from '@/hooks/api-hooks';
 
 export default function AuthPage() {
   const [searchParams] = useSearchParams();
@@ -19,7 +19,6 @@ export default function AuthPage() {
       navigate(`/dashboard?${longLink ? `createNew=${longLink}` : ''}`);
     }
 
-    return () => { };
   }, [isLoading, isAuthenticated]);
 
   return (

@@ -15,7 +15,7 @@ import { LinkIcon } from 'lucide-react';
 import useFetch from '@/hooks/use-fetch';
 import { logout } from '@/db/api-auth';
 import { BarLoader } from 'react-spinners';
-import { useUser } from '@/lib/apiHooks';
+import { useUser } from '@/hooks/api-hooks';
 
 export default function Header() {
   const navigate = useNavigate();

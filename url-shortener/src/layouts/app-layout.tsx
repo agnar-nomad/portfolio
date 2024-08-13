@@ -5,7 +5,6 @@ export default function AppLayout() {
   return (
     <div className="container">
       <header>
-        {/* Header */}
         <Header />
       </header>
       <main className="min-h-screen">
@@ -13,7 +12,6 @@ export default function AppLayout() {
         <Outlet />
       </main>
 
-      {/* Footer */}
       <footer className="p-10 text-center bg-gray-800 mt-10">
         Made with LOVE by Author
       </footer>

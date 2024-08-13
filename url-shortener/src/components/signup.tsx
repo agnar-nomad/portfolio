@@ -11,27 +11,27 @@ import { Input } from './ui/input';
 import { Button } from './ui/button';
 import { BeatLoader } from 'react-spinners';
 import InputError from './input-error';
-import useFetch from '@/hooks/use-fetch';
-import { signup } from '@/db/api-auth';
 import { useEffect } from 'react';
-import { signupSchema } from '@/lib/schemas';
+import { SignupSchema2, SignupSchemaType } from '@/lib/schemas';
 import { useNavigate } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
+import { useSignupUser } from '@/hooks/api-hooks';
+import * as v from 'valibot';
 
 export default function Signup() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<SignupSchemaType>({
     email: '',
     password: '',
     name: '',
-    profile_img: null,
+    profile_img: undefined,
   });
-  const [formErrors, setFormErrors] = useState([]);
+  const [formErrors, setFormErrors] = useState<Partial<Omit<SignupSchemaType, "profile_img">> & { profile_img: string }>();
 
   const longLink = searchParams.get('createNew');
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -40,11 +40,11 @@ export default function Signup() {
   };
 
   const {
-    data: signupData,
+    mutateAsync: signupMutationAsync,
+    isPending: signupLoading,
     error: signupError,
-    loading: signupLoading,
-    fn: signupFunc,
-  } = useFetch(signup, formData);
+    data: signupData,
+  } = useSignupUser()
 
   useEffect(() => {
     if (signupError == null && signupData) {
@@ -53,25 +53,30 @@ export default function Signup() {
     }
   }, [signupData, signupError, signupLoading]);
 
-  const handleSignup = async (e) => {
-    e.preventDefault();
-    setFormErrors([]);
+  const handleSignup = async () => {
+    setFormErrors({});
 
     try {
-      // validate form data with yup
-      await signupSchema.validate(formData, { abortEarly: false });
+      // validate form data
+      v.parse(SignupSchema2, formData)
 
       // api call
-      await signupFunc();
+      await signupMutationAsync(formData)
     } catch (error) {
-      const newErrors = {};
+      if (error instanceof v.ValiError && error.issues) {
+        const flatIssues = v.flatten<typeof SignupSchema2>(error?.issues)
+        console.log("flatIssues", flatIssues);
+        const newErrors = {};
 
-      // from yup
-      error?.inner?.forEach((err) => {
-        newErrors[err.path] = err.message;
-      });
+        Object.entries(flatIssues.nested).forEach(([key, value]) => {
+          newErrors[key] = value[0]
+        })
 
-      setFormErrors(newErrors);
+        setFormErrors(newErrors);
+
+      } else {
+        console.error("Login Error", error?.message, error)
+      }
     }
   };
 
@@ -93,7 +98,7 @@ export default function Signup() {
               placeholder="Enter name"
               onChange={handleInputChange}
             />
-            {formErrors.name && <InputError message={formErrors.name} />}
+            {formErrors?.name && <InputError message={formErrors.name} />}
           </div>
           <div className="space-y-1">
             <Input
@@ -102,7 +107,7 @@ export default function Signup() {
               placeholder="Enter email"
               onChange={handleInputChange}
             />
-            {formErrors.email && <InputError message={formErrors.email} />}
+            {formErrors?.email && <InputError message={formErrors.email} />}
           </div>
           <div className="space-y-1">
             <Input
@@ -111,7 +116,7 @@ export default function Signup() {
               placeholder="Enter password"
               onChange={handleInputChange}
             />
-            {formErrors.password && (
+            {formErrors?.password && (
               <InputError message={formErrors.password} />
             )}
           </div>
@@ -122,7 +127,7 @@ export default function Signup() {
               accept="image/*"
               onChange={handleInputChange}
             />
-            {formErrors.profile_img && (
+            {formErrors?.profile_img && (
               <InputError message={formErrors.profile_img} />
             )}
           </div>

@@ -11,25 +11,25 @@ import { Input } from './ui/input';
 import { Button } from './ui/button';
 import { BeatLoader } from 'react-spinners';
 import InputError from './input-error';
-import useFetch from '@/hooks/use-fetch';
-import { login } from '@/db/api-auth';
 import { useEffect } from 'react';
-import { loginSchema } from '@/lib/schemas';
+import { LoginSchema2, LoginSchemaType } from '@/lib/schemas';
 import { useNavigate } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
+import { useLoginUser } from '@/hooks/api-hooks';
+import * as v from 'valibot';
 
 export default function Login() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<LoginSchemaType>({
     email: '',
     password: '',
   });
-  const [formErrors, setFormErrors] = useState([]);
+  const [formErrors, setFormErrors] = useState<Partial<LoginSchemaType>>();
 
   const longLink = searchParams.get('createNew');
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -38,38 +38,42 @@ export default function Login() {
   };
 
   const {
-    data: loginData,
+    mutateAsync: loginMutationAsync,
+    isPending: loginLoading,
     error: loginError,
-    loading: loginLoading,
-    fn: loginFunc,
-  } = useFetch(login, formData);
+    data: loginData,
+  } = useLoginUser()
 
   useEffect(() => {
     if (loginError == null && loginData) {
       navigate(`/dashboard?${longLink ? `createNew=${longLink}` : ''}`);
-      // fetchUser();
     }
   }, [loginData, loginError]);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setFormErrors([]);
+  const handleLogin = async () => {
+    setFormErrors({});
 
     try {
-      // validate form data with yup
-      await loginSchema.validate(formData, { abortEarly: false });
+      // validate form data
+      v.parse(LoginSchema2, formData)
 
       // api call
-      await loginFunc();
+      await loginMutationAsync(formData)
     } catch (error) {
-      const newErrors = {};
+      if (error instanceof v.ValiError && error.issues) {
+        const flatIssues = v.flatten<typeof LoginSchema2>(error?.issues)
+        console.log("flatIssues", flatIssues);
+        const newErrors = {};
 
-      // from yup
-      error?.inner?.forEach((err) => {
-        newErrors[err.path] = err.message;
-      });
+        Object.entries(flatIssues.nested).forEach(([key, value]) => {
+          newErrors[key] = value[0]
+        })
 
-      setFormErrors(newErrors);
+        setFormErrors(newErrors);
+
+      } else {
+        console.error("Login Error", error?.message, error)
+      }
     }
   };
 
@@ -91,7 +95,7 @@ export default function Login() {
               placeholder="Enter email"
               onChange={handleInputChange}
             />
-            {formErrors.email && <InputError message={formErrors.email} />}
+            {formErrors?.email && <InputError message={formErrors.email} />}
           </div>
           <div className="space-y-1">
             <Input
@@ -100,7 +104,7 @@ export default function Login() {
               placeholder="Enter password"
               onChange={handleInputChange}
             />
-            {formErrors.password && (
+            {formErrors?.password && (
               <InputError message={formErrors.password} />
             )}
           </div>

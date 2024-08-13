@@ -64,5 +64,21 @@ export const SignupSchema2 = v.object({
   profile_img: v.nonOptional(v.optional(v.file()), 'Profile image is required'),
 });
 
+export const NewLinkSchema2 = v.object({
+  // title: Yup.string().required('Title is required'),
+  // longUrl: Yup.string()
+  //   .url('Must be a valid URL')
+  //   .required('Long URL is required'),
+  // customUrl: Yup.string(),
+  title: v.pipe(v.string(), v.nonEmpty('Title is required')),
+  longUrl: v.pipe(
+    v.string(),
+    v.url('Must be a valid URL'),
+    v.nonEmpty('Long URL is required')
+  ),
+  customUrl: v.optional(v.string()),
+});
+
 export type LoginSchemaType = v.InferOutput<typeof LoginSchema2>;
 export type SignupSchemaType = v.InferOutput<typeof SignupSchema2>;
+export type NewLinkSchemaType = v.InferOutput<typeof NewLinkSchema2>;

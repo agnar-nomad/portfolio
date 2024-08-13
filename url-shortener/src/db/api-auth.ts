@@ -28,7 +28,9 @@ export async function signup({
   password,
   profile_img,
 }: SignupSchemaType) {
-  const fileName = `img-${name.split(' ').join('-')}-${Math.random()}`;
+  const fileName = `img-${name
+    .split(' ')
+    .join('-')}-${new Date().toLocaleString()}`;
   const { error: storageError } = await supabase.storage
     .from('profile_img')
     .upload(fileName, profile_img);

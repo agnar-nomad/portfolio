@@ -1,11 +1,10 @@
-/* eslint-disable react/prop-types */
 
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { BarLoader } from 'react-spinners';
-import { useUser } from '@/lib/apiHooks';
+import { useUser } from '@/hooks/api-hooks';
 
-export default function RequireAuth({ children }) {
+export default function RequireAuth({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
 
   const { isLoading, isAuthenticated } = useUser();

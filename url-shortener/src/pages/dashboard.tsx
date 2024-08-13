@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 import InputError from '@/components/input-error';
 import LinkCard from '@/components/link-card';
 import CreateLink from '@/components/create-link';
-import { useUser } from '@/lib/apiHooks';
+import { useUser } from '@/hooks/api-hooks';
 
 export default function DashboardPage() {
   const [searchQuery, setSearchQuery] = useState('');

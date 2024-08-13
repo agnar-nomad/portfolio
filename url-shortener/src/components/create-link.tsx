@@ -20,7 +20,7 @@ import { createUrl } from '@/db/api-urls';
 import { BeatLoader } from 'react-spinners';
 import { createNewLinkSchema } from '@/lib/schemas';
 import { useEffect } from 'react';
-import { useUser } from '@/lib/apiHooks';
+import { useUser } from '@/hooks/api-hooks';
 
 export default function CreateLink() {
   const { user } = useUser();
