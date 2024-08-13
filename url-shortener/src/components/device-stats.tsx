@@ -1,24 +1,30 @@
+import { ClicksType } from '@/types/supabase';
 import { PieChart, Pie, ResponsiveContainer, Cell, Tooltip } from 'recharts';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
-export default function DeviceStats({ stats }) {
+
+type DeviceStatsProps = {
+  stats: ClicksType[]
+}
+
+export default function DeviceStats({ stats }: DeviceStatsProps) {
   const deviceCounts = stats.reduce((acc, item) => {
-    if (acc[item.device]) {
-      acc[item.device] += 1;
+    const deviceType = item.device || "unknown"
+    if (acc[deviceType]) {
+      acc[deviceType] += 1;
     } else {
-      acc[item.device] = 1;
+      acc[deviceType] = 1;
     }
 
     return acc;
-  }, {});
+  }, {} as Record<string, number>);
 
   const data = Object.entries(deviceCounts)
     .map(([device, count]) => ({
       device,
       count,
-    }))
-    .slice(0, 5);
+    }));
 
   return (
     <div className="w-full h-80">
@@ -31,7 +37,7 @@ export default function DeviceStats({ stats }) {
               `${device}: ${(percent * 100).toFixed(0)}%`
             }
             dataKey="count">
-            {data.map((entry, index) => (
+            {data.map((_, index) => (
               <Cell
                 key={`cell-${index}`}
                 fill={COLORS[index % COLORS.length]}

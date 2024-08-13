@@ -4,9 +4,14 @@ import { Copy, Download, Trash2 } from 'lucide-react';
 import useFetch from '@/hooks/use-fetch';
 import { deleteUrl } from '@/db/api-urls';
 import { BeatLoader } from 'react-spinners';
+import { URLsType } from '@/types/supabase';
 
-/* eslint-disable react/prop-types */
-export default function LinkCard({ url, fetchUrls }) {
+
+type LinkCardProp = {
+  url: URLsType,
+  fetchUrls?: () => void
+}
+export default function LinkCard({ url, fetchUrls }: LinkCardProp) {
   const { loading: deleteLoading, fn: deleteFn } = useFetch(deleteUrl, url?.id);
 
   const handleCopy = () => {
@@ -14,8 +19,9 @@ export default function LinkCard({ url, fetchUrls }) {
   };
 
   const handleDownload = () => {
-    const imageUrl = url?.qr;
-    const fileName = url?.title;
+    // TODO
+    const imageUrl = url?.qr || "";
+    const fileName = url?.title || "file";
 
     const anchor = document.createElement('a');
     anchor.href = imageUrl;
@@ -27,13 +33,14 @@ export default function LinkCard({ url, fetchUrls }) {
   };
 
   const handleDelete = () => {
-    deleteFn().then(() => fetchUrls());
+    deleteFn().then(() => fetchUrls && fetchUrls());
+    // TODO remove this function as prop and bring in with a hook
   };
 
   return (
     <div className="flex flex-col md:flex-row gap-5 border p-4 bg-gray-900 rounded-lg">
       <img
-        src={url?.qr}
+        src={url?.qr || ""} // TODO
         alt="QR code"
         className="h-32 w-32 object-contain ring ring-blue-500 self-start"
       />

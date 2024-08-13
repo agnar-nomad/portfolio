@@ -15,22 +15,21 @@ import { Card } from './ui/card';
 import { useState } from 'react';
 import { QRCode } from 'react-qrcode-logo';
 import { useRef } from 'react';
-import useFetch from '@/hooks/use-fetch';
-import { createUrl } from '@/db/api-urls';
 import { BeatLoader } from 'react-spinners';
-import { createNewLinkSchema } from '@/lib/schemas';
+import { NewLinkSchema2, NewLinkSchemaType } from '@/lib/schemas';
 import { useEffect } from 'react';
-import { useUser } from '@/hooks/api-hooks';
+import { useCreateNewUrl, useUser } from '@/hooks/api-hooks';
+import * as v from 'valibot';
 
 export default function CreateLink() {
   const { user } = useUser();
   const navigate = useNavigate();
-  const qrCodeRef = useRef(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const longLink = searchParams.get('createNew');
 
-  const [formErrors, setFormErrors] = useState({});
-  const [formValues, setFormValues] = useState({
+  const qrCodeRef = useRef<QRCode>(null);
+  const [formErrors, setFormErrors] = useState<Partial<NewLinkSchemaType>>({});
+  const [formValues, setFormValues] = useState<NewLinkSchemaType>({
     title: '',
     longUrl: longLink ? longLink : '',
     customUrl: '',
@@ -38,12 +37,12 @@ export default function CreateLink() {
 
   const {
     data: createUrlData,
-    loading: createUrlLoading,
+    isPending: createUrlLoading,
     error: createUrlError,
-    fn: createUrlFn,
-  } = useFetch(createUrl, { ...formValues, userId: user.id });
+    mutateAsync: createUrlMutationAsync
+  } = useCreateNewUrl()
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormValues({
       ...formValues,
@@ -54,45 +53,58 @@ export default function CreateLink() {
   const createNewLink = async () => {
     setFormErrors({});
     try {
-      // validate form data with yup
-      await createNewLinkSchema.validate(formValues, { abortEarly: false });
+      // validate form data
+      // await createNewLinkSchema.validate(formValues, { abortEarly: false });
+      v.parse(NewLinkSchema2, formValues)
 
-      // extract the qr code image from the component
-      const qrCodeCanvas = qrCodeRef.current.canvasRef.current;
-      const qrCodeBlob = await new Promise((resolve) =>
-        qrCodeCanvas.toBlob(resolve)
-      );
+      let qrCodeBlob = undefined
+
+      if (qrCodeRef.current) {
+        // extract the qr code image from the component
+        const qrCodeCanvas = qrCodeRef.current.canvasRef.current;
+        qrCodeBlob = await new Promise((resolve) =>
+          qrCodeCanvas.toBlob(resolve)
+        ) as Blob;
+      }
 
       // send all data to API
-      await createUrlFn(qrCodeBlob); // additional param provided here, the others were provided on the hook level
+      await createUrlMutationAsync({ ...formValues, userId: user.id!, qrCode: qrCodeBlob }); // additional param provided here, the others were provided on the hook level
     } catch (error) {
-      const newErrors = {};
+      if (error instanceof v.ValiError && error.issues) {
+        const flatIssues = v.flatten<typeof NewLinkSchema2>(error?.issues)
+        console.log("flatIssues", flatIssues);
+        const newErrors = {};
 
-      // from yup
-      error?.inner?.forEach((err) => {
-        newErrors[err.path] = err.message;
-      });
+        Object.entries(flatIssues.nested).forEach(([key, value]) => {
+          newErrors[key] = value[0]
+        })
 
-      setFormErrors(newErrors);
+        setFormErrors(newErrors);
+
+      } else {
+        console.error("Create New Link Error", error?.message, error)
+      }
     }
   };
 
   useEffect(() => {
     if (createUrlError == null && createUrlData) {
       navigate(`/link/${createUrlData[0].id}`);
+      // TODO move this nav to the hook
     }
   }, [createUrlData, createUrlError]);
 
   return (
     <Dialog
       defaultOpen={!!longLink}
-      // open by defalt, if url search param is found
+      // open by default, if url search param is found
       onOpenChange={(res) => {
         // if we close the dialog, remove data from url bar too
         if (!res) setSearchParams({});
       }}>
       <DialogTrigger asChild>
         <Button variant="destructive">Create New Link</Button>
+        {/* TODO not destructive */}
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>

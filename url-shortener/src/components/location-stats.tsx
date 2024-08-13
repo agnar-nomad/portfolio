@@ -1,3 +1,4 @@
+import { ClicksType } from '@/types/supabase';
 import {
   LineChart,
   Line,
@@ -8,23 +9,28 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-export default function LocationStats({ stats }) {
+type LocationStatsProps = {
+  stats: ClicksType[]
+}
+
+export default function LocationStats({ stats }: LocationStatsProps) {
   const cityCounts = stats.reduce((acc, item) => {
-    if (acc[item.city]) {
-      acc[item.city] += 1;
+    const city = item.city || "unknown"
+    if (acc[city]) {
+      acc[city] += 1;
     } else {
-      acc[item.city] = 1;
+      acc[city] = 1;
     }
 
     return acc;
-  }, {});
+  }, {} as Record<string, number>);
 
   const data = Object.entries(cityCounts)
     .map(([city, count]) => ({
       city,
       count,
     }))
-    .slice(0, 5);
+    .slice(0, 10);
 
   return (
     <div className="w-full h-80">

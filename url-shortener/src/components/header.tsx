@@ -12,25 +12,18 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { LogOut } from 'lucide-react';
 import { LinkIcon } from 'lucide-react';
-import useFetch from '@/hooks/use-fetch';
-import { logout } from '@/db/api-auth';
 import { BarLoader } from 'react-spinners';
-import { useUser } from '@/hooks/api-hooks';
+import { useLogoutUser, useUser } from '@/hooks/api-hooks';
 
 export default function Header() {
   const navigate = useNavigate();
-  const { user, } = useUser();
+  const { user } = useUser();
 
-  const { loading, fn: logoutFn } = useFetch(logout);
+  const { isPending: logoutLoading, mutate: logoutMutation } = useLogoutUser()
 
-  const handleLogin = () => navigate('/auth');
+  const handleClickLogin = () => navigate('/auth');
 
-  const handleLogout = () => {
-    logoutFn().then(() => {
-      // fetchUser();
-      navigate('/');
-    });
-  };
+  const handleLogout = () => logoutMutation();
 
   return (
     <>
@@ -40,7 +33,7 @@ export default function Header() {
         </Link>
         <div>
           {!user ? (
-            <Button onClick={handleLogin}>Login</Button>
+            <Button onClick={handleClickLogin}>Login</Button>
           ) : (
             <DropdownMenu>
               <DropdownMenuTrigger className="w-10 rounded-full overflow-hidden">
@@ -74,7 +67,7 @@ export default function Header() {
           )}
         </div>
       </nav>
-      {loading && <BarLoader className="mb-4" width={'100%'} color="#36d7b7" />}
+      {logoutLoading && <BarLoader className="mb-4" width={'100%'} color="#36d7b7" />}
     </>
   );
 }

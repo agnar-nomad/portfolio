@@ -1,6 +1,8 @@
+import { URLsType, User } from '@/types/supabase';
 import supabase, { supabaseUrl } from './supabase';
+import { NewLinkSchemaType } from '@/lib/schemas';
 
-export async function getUrls(userId) {
+export async function getUrls(userId: User['id']) {
   const { data, error } = await supabase
     .from('urls')
     .select('*')
@@ -14,7 +16,7 @@ export async function getUrls(userId) {
   return data;
 }
 
-export async function deleteUrl(id) {
+export async function deleteUrl(id: URLsType['id']) {
   const { data, error } = await supabase.from('urls').delete().eq('id', id);
 
   if (error) {
@@ -25,19 +27,33 @@ export async function deleteUrl(id) {
   return data;
 }
 
-export async function createUrl({ title, longUrl, customUrl, userId }, qrCode) {
+type CreateUrlApiProps = NewLinkSchemaType & {
+  userId: User['id'];
+  qrCode?: Blob;
+};
+export async function createUrl({
+  title,
+  longUrl,
+  customUrl,
+  userId,
+  qrCode,
+}: CreateUrlApiProps) {
   // create a short url first
   const shortUrl = Math.random().toString(36).substring(2, 8); // generate unique 6 character string
 
-  // upload the associated qr code
-  const fileName = `qr-${shortUrl}`;
-  const { error: storageError } = await supabase.storage
-    .from('qrs')
-    .upload(fileName, qrCode);
+  let qrCodeUrl = undefined;
 
-  if (storageError) throw new Error(storageError.message);
+  if (qrCode) {
+    // upload the associated qr code
+    const fileName = `qr-${shortUrl}`;
+    const { error: storageError } = await supabase.storage
+      .from('qrs')
+      .upload(fileName, qrCode);
 
-  const qrCodeUrl = `${supabaseUrl}/storage/v1/object/public/qrs/${fileName}`;
+    if (storageError) throw new Error(storageError.message);
+
+    qrCodeUrl = `${supabaseUrl}/storage/v1/object/public/qrs/${fileName}`;
+  }
 
   const { data, error } = await supabase
     .from('urls')
@@ -61,7 +77,8 @@ export async function createUrl({ title, longUrl, customUrl, userId }, qrCode) {
   return data;
 }
 
-export async function getLongUrl(id) {
+export async function getLongUrl(id: URLsType['id']) {
+  // TODO rescan whole file
   // get original url base on the short one
   const { data, error } = await supabase
     .from('urls')
@@ -78,7 +95,13 @@ export async function getLongUrl(id) {
   return data;
 }
 
-export async function getSingleUrl({ userId, id }) {
+export async function getSingleUrl({
+  userId,
+  id,
+}: {
+  userId: User['id'];
+  id: URLsType['id'];
+}) {
   const { data, error } = await supabase
     .from('urls')
     .select('*')
