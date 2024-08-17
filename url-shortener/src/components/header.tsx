@@ -42,7 +42,7 @@ export default function Header() {
                     src={user?.user_metadata?.profile_img}
                     className="object-cover"
                   />
-                  <AvatarFallback>AN</AvatarFallback>
+                  <AvatarFallback>U</AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -53,7 +53,7 @@ export default function Header() {
                 <DropdownMenuItem>
                   <Link to="/dashboard" className="flex">
                     <LinkIcon className="mr-2 h-4 w-4" />
-                    <span> My Links</span>
+                    <span>My Links</span>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem

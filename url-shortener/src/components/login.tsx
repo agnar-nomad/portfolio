@@ -12,7 +12,7 @@ import { Button } from './ui/button';
 import { BeatLoader } from 'react-spinners';
 import InputError from './input-error';
 import { useEffect } from 'react';
-import { LoginSchema2, LoginSchemaType } from '@/lib/schemas';
+import { LoginSchema, LoginSchemaType } from '@/lib/schemas';
 import { useNavigate } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 import { useLoginUser } from '@/hooks/api-hooks';
@@ -55,13 +55,13 @@ export default function Login() {
 
     try {
       // validate form data
-      v.parse(LoginSchema2, formData)
+      v.parse(LoginSchema, formData)
 
       // api call
       await loginMutationAsync(formData)
     } catch (error) {
       if (error instanceof v.ValiError && error.issues) {
-        const flatIssues = v.flatten<typeof LoginSchema2>(error?.issues)
+        const flatIssues = v.flatten<typeof LoginSchema>(error?.issues)
         console.log("flatIssues", flatIssues);
         const newErrors = {};
 

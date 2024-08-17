@@ -1,46 +1,37 @@
 import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Copy, Download, Trash2 } from 'lucide-react';
-import useFetch from '@/hooks/use-fetch';
-import { deleteUrl } from '@/db/api-urls';
 import { BeatLoader } from 'react-spinners';
 import { URLsType } from '@/types/supabase';
+import { useDeleteUrl } from '@/hooks/api-hooks';
+import { downloadFile } from '@/lib/utils';
 
 
 type LinkCardProp = {
   url: URLsType,
-  fetchUrls?: () => void
 }
-export default function LinkCard({ url, fetchUrls }: LinkCardProp) {
-  const { loading: deleteLoading, fn: deleteFn } = useFetch(deleteUrl, url?.id);
+
+export default function LinkCard({ url }: LinkCardProp) {
+
+  const { isPending: deleteLoading, mutate: deleteMutation } = useDeleteUrl(url.id)
 
   const handleCopy = () => {
     navigator?.clipboard.writeText(`https://trimmr.in/${url?.short_url}`);
   };
 
   const handleDownload = () => {
-    // TODO
     const imageUrl = url?.qr || "";
     const fileName = url?.title || "file";
 
-    const anchor = document.createElement('a');
-    anchor.href = imageUrl;
-    anchor.download = fileName;
-
-    document.body.appendChild(anchor);
-    anchor.click();
-    document.body.removeChild(anchor);
+    downloadFile(imageUrl, fileName)
   };
 
-  const handleDelete = () => {
-    deleteFn().then(() => fetchUrls && fetchUrls());
-    // TODO remove this function as prop and bring in with a hook
-  };
+  const handleDelete = () => deleteMutation()
 
   return (
-    <div className="flex flex-col md:flex-row gap-5 border p-4 bg-gray-900 rounded-lg">
+    <article className="flex flex-col md:flex-row gap-5 border p-4 bg-gray-900 rounded-lg">
       <img
-        src={url?.qr || ""} // TODO
+        src={url?.qr || ""}
         alt="QR code"
         className="h-32 w-32 object-contain ring ring-blue-500 self-start"
       />
@@ -55,15 +46,15 @@ export default function LinkCard({ url, fetchUrls }: LinkCardProp) {
           {url.original_url}
         </span>
         <span className="flex items-end font-extralight text-sm flex-1">
-          {new Date(url?.created_at).toLocaleString()}
+          {new Date(url.created_at).toLocaleString()}
         </span>
       </Link>
       <div className="flex gap-2">
         <Button variant="ghost" onClick={handleCopy}>
-          <Copy className="" />
+          <Copy />
         </Button>
         <Button variant="ghost" onClick={handleDownload}>
-          <Download className="" />
+          <Download />
         </Button>
         <Button variant="ghost" onClick={handleDelete}>
           {deleteLoading ? (
@@ -73,6 +64,6 @@ export default function LinkCard({ url, fetchUrls }: LinkCardProp) {
           )}
         </Button>
       </div>
-    </div>
+    </article>
   );
 }

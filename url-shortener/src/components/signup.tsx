@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import {
   Card,
   CardContent,
@@ -11,21 +11,18 @@ import { Input } from './ui/input';
 import { Button } from './ui/button';
 import { BeatLoader } from 'react-spinners';
 import InputError from './input-error';
-import { useEffect } from 'react';
-import { SignupSchema2, SignupSchemaType } from '@/lib/schemas';
-import { useNavigate } from 'react-router-dom';
-import { useSearchParams } from 'react-router-dom';
+import { SignupSchema, SignupSchemaType } from '@/lib/schemas';
+import { useNavigate, useSearchParams} from 'react-router-dom';
 import { useSignupUser } from '@/hooks/api-hooks';
 import * as v from 'valibot';
 
 export default function Signup() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [formData, setFormData] = useState<SignupSchemaType>({
+  const [formData, setFormData] = useState<Partial<SignupSchemaType>>({
     email: '',
     password: '',
     name: '',
-    profile_img: undefined,
   });
   const [formErrors, setFormErrors] = useState<Partial<Omit<SignupSchemaType, "profile_img">> & { profile_img: string }>();
 
@@ -49,22 +46,21 @@ export default function Signup() {
   useEffect(() => {
     if (signupError == null && signupData) {
       navigate(`/dashboard?${longLink ? `createNew=${longLink}` : ''}`);
-      // fetchUser();
     }
   }, [signupData, signupError, signupLoading]);
 
   const handleSignup = async () => {
-    setFormErrors({});
+    setFormErrors(undefined);
 
     try {
       // validate form data
-      v.parse(SignupSchema2, formData)
+      v.parse(SignupSchema, formData)
 
       // api call
-      await signupMutationAsync(formData)
+      await signupMutationAsync(formData as SignupSchemaType)
     } catch (error) {
       if (error instanceof v.ValiError && error.issues) {
-        const flatIssues = v.flatten<typeof SignupSchema2>(error?.issues)
+        const flatIssues = v.flatten<typeof SignupSchema>(error?.issues)
         console.log("flatIssues", flatIssues);
         const newErrors = {};
 

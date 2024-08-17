@@ -1,5 +1,4 @@
 import { useSearchParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import {
   Dialog,
   DialogContent,
@@ -16,14 +15,12 @@ import { useState } from 'react';
 import { QRCode } from 'react-qrcode-logo';
 import { useRef } from 'react';
 import { BeatLoader } from 'react-spinners';
-import { NewLinkSchema2, NewLinkSchemaType } from '@/lib/schemas';
-import { useEffect } from 'react';
+import { NewLinkSchema, NewLinkSchemaType } from '@/lib/schemas';
 import { useCreateNewUrl, useUser } from '@/hooks/api-hooks';
 import * as v from 'valibot';
 
 export default function CreateLink() {
   const { user } = useUser();
-  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const longLink = searchParams.get('createNew');
 
@@ -36,7 +33,6 @@ export default function CreateLink() {
   });
 
   const {
-    data: createUrlData,
     isPending: createUrlLoading,
     error: createUrlError,
     mutateAsync: createUrlMutationAsync
@@ -54,8 +50,7 @@ export default function CreateLink() {
     setFormErrors({});
     try {
       // validate form data
-      // await createNewLinkSchema.validate(formValues, { abortEarly: false });
-      v.parse(NewLinkSchema2, formValues)
+      v.parse(NewLinkSchema, formValues)
 
       let qrCodeBlob = undefined
 
@@ -68,10 +63,10 @@ export default function CreateLink() {
       }
 
       // send all data to API
-      await createUrlMutationAsync({ ...formValues, userId: user.id!, qrCode: qrCodeBlob }); // additional param provided here, the others were provided on the hook level
+      await createUrlMutationAsync({ ...formValues, userId: user?.id ?? "", qrCode: qrCodeBlob }); 
     } catch (error) {
       if (error instanceof v.ValiError && error.issues) {
-        const flatIssues = v.flatten<typeof NewLinkSchema2>(error?.issues)
+        const flatIssues = v.flatten<typeof NewLinkSchema>(error?.issues)
         console.log("flatIssues", flatIssues);
         const newErrors = {};
 
@@ -87,12 +82,6 @@ export default function CreateLink() {
     }
   };
 
-  useEffect(() => {
-    if (createUrlError == null && createUrlData) {
-      navigate(`/link/${createUrlData[0].id}`);
-      // TODO move this nav to the hook
-    }
-  }, [createUrlData, createUrlError]);
 
   return (
     <Dialog
@@ -118,6 +107,7 @@ export default function CreateLink() {
         <Input
           id="title"
           placeholder="Short link's title"
+          required
           value={formValues.title}
           onChange={handleInputChange}
         />
@@ -125,6 +115,7 @@ export default function CreateLink() {
         <Input
           id="longUrl"
           placeholder="Enter your long url"
+          required
           value={formValues.longUrl}
           onChange={handleInputChange}
         />
@@ -149,7 +140,6 @@ export default function CreateLink() {
             )}
           </Button>
         </DialogFooter>
-        {JSON.stringify(formValues, null, 4)}
       </DialogContent>
     </Dialog>
   );
