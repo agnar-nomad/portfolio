@@ -3,52 +3,43 @@ import { BarLoader } from 'react-spinners';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Filter } from 'lucide-react';
-import useFetch from '@/hooks/use-fetch';
-import { getUrls } from '@/db/api-urls';
-import { getClicksForUrls } from '@/db/api-clicks';
-import { useEffect } from 'react';
 import InputError from '@/components/input-error';
 import LinkCard from '@/components/link-card';
 import CreateLink from '@/components/create-link';
-import { useUser } from '@/hooks/api-hooks';
+import { useFetchClicksForUser, useFetchUrls } from '@/hooks/api-hooks';
 
 export default function DashboardPage() {
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { user } = useUser()
-
   const {
-    loading: urlsLoading,
+    isLoading: urlsLoading,
     error: urlsError,
     data: urlsData,
-    fn: getUrlsFn,
-  } = useFetch(getUrls, user?.id);
+  } = useFetchUrls()
+
+  const urlIdsList = urlsData?.map((url) => url.id)
 
   const {
-    loading: clicksLoading,
+    isLoading: clicksLoading,
     data: clicksData,
-    fn: getClicksFn,
-  } = useFetch(
-    getClicksForUrls,
-    urlsData?.map((url) => url.id)
-  );
+    error: clicksError
+  } = useFetchClicksForUser(urlIdsList || [])
 
-  useEffect(() => {
-    getUrlsFn();
-  }, []);
+  console.log("urlsData", urlsData, "clicksData", clicksData);
+  
 
-  useEffect(() => {
-    if (urlsData?.length) {
-      getClicksFn();
-    }
-  }, [urlsData?.length]);
+//   useEffect(() => {
+//     if (urlsData?.length) {
+//       getClicksFn();
+//     }
+//   }, [urlsData?.length]);
 
-  const handleFilterChange = (e) => {
+  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
 
   const filteredUrls = urlsData?.filter((url) =>
-    url.title.toLowerCase().includes(searchQuery.toLowerCase())
+    url.title?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -88,9 +79,10 @@ export default function DashboardPage() {
         <Filter className="absolute top-2 right-2 p-1" />
       </section>
       {urlsError && <InputError message={urlsError?.message} />}
+      {clicksError && <InputError message={clicksError?.message} />}
       <section className="space-y-4">
         {(filteredUrls || []).map((url) => (
-          <LinkCard key={url.id} url={url} fetchUrls={getUrlsFn} />
+          <LinkCard key={url.id} url={url} />
         ))}
       </section>
     </div>

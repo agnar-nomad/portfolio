@@ -1,6 +1,3 @@
-import { getClicksForSingleUrl } from '@/db/api-clicks';
-import { deleteUrl, getSingleUrl } from '@/db/api-urls';
-import useFetch from '@/hooks/use-fetch';
 import { LinkIcon } from 'lucide-react';
 import { useEffect } from 'react';
 import { Copy, Download, Trash2 } from 'lucide-react';
@@ -8,68 +5,56 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { BarLoader, BeatLoader } from 'react-spinners';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent, CardHeader,
-  CardTitle
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import LocationStats from '@/components/location-stats';
 import DeviceStats from '@/components/device-stats';
-import { useUser } from '@/hooks/api-hooks';
+import { useDeleteUrl, useFetchClicksForSingleUrl, useFetchSingleUrl } from '@/hooks/api-hooks';
+import { downloadFile } from '@/lib/utils';
 
 export default function LinkPage() {
-  const { user } = useUser();
   const { id } = useParams();
   const navigate = useNavigate();
 
+  let IdAsNum = Number(id)
+  if(isNaN(IdAsNum)) {
+    IdAsNum = -1
+  }
+
   const {
-    loading: urlLoading,
+    isLoading: urlLoading,
     data: urlData,
     error: urlError,
-    fn: getSingleUrlFn,
-  } = useFetch(getSingleUrl, { userId: user?.id, id: id });
+  } = useFetchSingleUrl(IdAsNum)
 
   const {
-    loading: clicksLoading,
+    isLoading: clicksLoading,
     data: clicksData,
-    fn: getClicksForSingleUrlFn,
-  } = useFetch(getClicksForSingleUrl, id);
+  } = useFetchClicksForSingleUrl(IdAsNum)
 
-  const { loading: deleteLoading, fn: deleteFn } = useFetch(deleteUrl, id);
+  const { isPending: deleteLoading, mutate: deleteMutation } = useDeleteUrl(IdAsNum)
 
   useEffect(() => {
-    getSingleUrlFn();
-    getClicksForSingleUrlFn();
-
     if (urlError) {
       navigate('/dashboard');
     }
-  }, []);
+  }, [urlError]);
 
   const handleCopy = () => {
     navigator?.clipboard.writeText(`https://trimmr.in/${urlData?.short_url}`);
   };
 
   const handleDownload = () => {
-    const imageUrl = urlData?.qr;
-    const fileName = urlData?.title;
+    const imageUrl = urlData?.qr || "";
+    const fileName = urlData?.title || "file";
 
-    const anchor = document.createElement('a');
-    anchor.href = imageUrl;
-    anchor.download = fileName;
-
-    document.body.appendChild(anchor);
-    anchor.click();
-    document.body.removeChild(anchor);
+    downloadFile(imageUrl, fileName)
   };
 
-  const handleDelete = () => {
-    deleteFn();
-  };
+  const handleDelete = () => deleteMutation()
 
   let link = '';
   if (urlData) {
-    link = urlData?.custom_url ? urlData?.custom_url : urlData.short_url;
+    link = urlData?.custom_url ? urlData?.custom_url : urlData.short_url as string;
   }
 
   return (
@@ -87,14 +72,14 @@ export default function LinkPage() {
             https://trimmr.in/{link}
           </a>
           <a
-            href={urlData?.original_url}
+            href={urlData?.original_url as string}
             target="_blank"
             className="flex items-center gap-1 hover:underline">
             <LinkIcon className="p-1" />
             {urlData?.original_url}
           </a>
           <span className="flex items-end font-extralight text-sm flex-1">
-            {new Date(urlData?.created_at).toLocaleString()}
+            {new Date(urlData?.created_at as string).toLocaleString()}
           </span>
           <div className="flex gap-2">
             <Button variant="ghost" onClick={handleCopy}>
@@ -111,17 +96,20 @@ export default function LinkPage() {
               )}
             </Button>
           </div>
-          <img
-            src={urlData?.qr}
+          {urlData?.qr ? 
+            <img
+            src={urlData.qr}
             alt="QR code"
             className="w-full self-center sm:self-start object-contain ring ring-blue-500 p-1"
-          />
+            />
+            : null}
         </section>
+        
         <section className="sm:w-3/5">
           <Card className="w-full h-full">
             <CardHeader>
               <CardTitle className="text-4xl font-extrabold">
-                Statictics
+                Statistics
               </CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-6">
@@ -143,9 +131,9 @@ export default function LinkPage() {
                 </>
               ) : (
                 <p>
-                  {!clicksLoading
-                    ? 'Statistics not available yet'
-                    : 'Loading statistics'}
+                  {clicksLoading
+                    ? 'Loading statistics'
+                    : 'Statistics not available yet'}
                 </p>
               )}
             </CardContent>

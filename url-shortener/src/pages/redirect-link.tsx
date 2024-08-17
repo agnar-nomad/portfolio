@@ -1,39 +1,37 @@
-import { storeClicks } from '@/db/api-clicks';
-import { getLongUrl } from '@/db/api-urls';
-import useFetch from '@/hooks/use-fetch';
+import InputError from '@/components/input-error';
+import { useFetchLongUrlFromShortUrl, useReportUrlClick } from '@/hooks/api-hooks';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { BarLoader } from 'react-spinners';
 
 export default function RedirectLinkPage() {
-  // pick up link id
+  // pick up link param = short url or custom url
   const { id } = useParams();
 
   const {
-    loading: longUrlLoading,
+    isLoading: longUrlLoading,
     data: longUrlData,
-    fn: getLongUrlFn,
-  } = useFetch(getLongUrl, id);
+    error: longUrlError
+  } = useFetchLongUrlFromShortUrl(id ?? "")
 
-  const { loading: reportClickLoading, fn: reportClickFn } = useFetch(
-    storeClicks,
-    {
-      id: longUrlData?.id,
-      originalUrl: longUrlData?.original_url,
-    }
-  );
+  const { isPending: reportClickLoading, mutate: reportClickMutation } = useReportUrlClick();
+
 
   useEffect(() => {
-    // get long url asap
-    getLongUrlFn();
-  }, []);
-
-  useEffect(() => {
-    // if long url fetched, report click and redirect to original url
-    if (!longUrlLoading && longUrlData) {
-      reportClickFn();
+    // if long url fetched, report click and redirect to original url(done by the POST function)
+    if (!longUrlLoading && longUrlData?.id) {
+      reportClickMutation({
+        urlId: longUrlData.id,
+        originalUrl: longUrlData.original_url as string,
+      });
     }
-  }, [longUrlLoading]);
+  }, [longUrlLoading, longUrlData?.id]);
+
+  if(longUrlError && !longUrlLoading) {
+    return (
+        <InputError message={longUrlError.message} />
+    )
+  }
 
   if (longUrlLoading || reportClickLoading) {
     return (

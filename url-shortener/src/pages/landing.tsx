@@ -10,12 +10,12 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function LandingPage() {
-  const [longUrl, setLongUrl] = useState();
+  const [longUrl, setLongUrl] = useState<string>();
   const navigate = useNavigate();
 
-  const handleInputChange = (e) => setLongUrl(e.target.value);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setLongUrl(e.target.value);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (longUrl) {
       navigate(`/auth?createNew=${longUrl}`);
@@ -43,7 +43,7 @@ export default function LandingPage() {
       </form>
       <img src="/banner.jpeg" alt="Banner" className="w-full my-11 md:px-11" />
 
-      <Accordion type="multiple" collapsible className="w-full md:px-11">
+      <Accordion type="multiple" className="w-full md:px-11">
         <AccordionItem value="item-1">
           <AccordionTrigger>How does the URL Shortener work?</AccordionTrigger>
           <AccordionContent>

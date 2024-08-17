@@ -7,5 +7,5 @@ export const useUtilHelpers = () => {
 
   const longLink = searchParams.get('createNew');
 
-  return { navigate, newUrlSearchParam: longLink }
+  return { navigate, createNewUrlSearchParam: longLink }
 }
