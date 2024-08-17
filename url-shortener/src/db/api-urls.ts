@@ -1,5 +1,6 @@
+import supabase from './supabase';
+import { supabaseUrl } from '@/lib/config';
 import { URLsType, User } from '@/types/supabase';
-import supabase, { supabaseUrl } from './supabase';
 import { NewLinkSchemaType } from '@/lib/schemas';
 
 export async function getUrls(userId: User['id']) {
@@ -38,10 +39,10 @@ export async function createUrl({
   userId,
   qrCode,
 }: CreateUrlApiProps) {
-  // create a short url first
+  // generate a short url first
   const shortUrl = Math.random().toString(36).substring(2, 8); // generate unique 6 character string
 
-  let qrCodeUrl = undefined;
+  let qrCodeUrl = null;
 
   if (qrCode) {
     // upload the associated qr code
@@ -55,6 +56,7 @@ export async function createUrl({
     qrCodeUrl = `${supabaseUrl}/storage/v1/object/public/qrs/${fileName}`;
   }
 
+//   upload new url together with qrcode
   const { data, error } = await supabase
     .from('urls')
     .insert([
@@ -71,25 +73,25 @@ export async function createUrl({
 
   if (error) {
     console.error(error.message);
-    throw new Error('Error creating short URL');
+    throw new Error('Error creating new URL');
   }
 
   return data;
 }
 
-export async function getLongUrl(id: URLsType['id']) {
-  // TODO rescan whole file
-  // get original url base on the short one
+export async function getLongUrl(id: URLsType["short_url"] | URLsType["custom_url"]) {
+  // get original url based on the short one
   const { data, error } = await supabase
     .from('urls')
     .select('id, original_url')
     .or(`short_url.eq.${id},custom_url.eq.${id}`)
     .single();
-  // either short url or custom url can be used in the user's trimmr link
+  // either short url or custom url can be used in the user's shortened link, so fetch by querying those
+//   MAIN functionality
 
   if (error) {
     console.error(error.message);
-    throw new Error('Error fetching short link');
+    throw new Error('Error fetching Long URL');
   }
 
   return data;
@@ -97,21 +99,21 @@ export async function getLongUrl(id: URLsType['id']) {
 
 export async function getSingleUrl({
   userId,
-  id,
+  urlId,
 }: {
   userId: User['id'];
-  id: URLsType['id'];
+  urlId: URLsType['id'];
 }) {
   const { data, error } = await supabase
     .from('urls')
     .select('*')
-    .eq('id', id)
+    .eq('id', urlId)
     .eq('user_id', userId)
     .single();
 
   if (error) {
     console.error(error.message);
-    throw new Error('Short URL not found');
+    throw new Error('Single URL not found');
   }
 
   return data;

@@ -1,6 +1,16 @@
 import { LoginSchemaType, SignupSchemaType } from '@/lib/schemas';
 import supabase from './supabase';
-import { supabaseUrl } from './supabase';
+import { supabaseUrl } from '@/lib/config';
+
+export async function getCurrentUser() {
+  const { data, error } = await supabase.auth.getSession();
+
+  if (!data.session) return null;
+  if (error) throw new Error(error.message);
+
+  return data.session?.user;
+}
+
 
 export async function login({ email, password }: LoginSchemaType) {
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -13,14 +23,6 @@ export async function login({ email, password }: LoginSchemaType) {
   return data;
 }
 
-export async function getCurrentUser() {
-  const { data: session, error } = await supabase.auth.getSession();
-
-  if (!session.session) return null;
-  if (error) throw new Error(error.message);
-
-  return session.session?.user;
-}
 
 export async function signup({
   name,
@@ -28,9 +30,12 @@ export async function signup({
   password,
   profile_img,
 }: SignupSchemaType) {
+
+    // upload the profile image first
   const fileName = `img-${name
     .split(' ')
     .join('-')}-${new Date().toLocaleString()}`;
+
   const { error: storageError } = await supabase.storage
     .from('profile_img')
     .upload(fileName, profile_img);
