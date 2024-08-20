@@ -59,9 +59,8 @@ export default function CreateLink() {
 
       if (qrCodeRef.current) {
         // extract the qr code image from the component
+        // @ts-expect-error I simply need to access canvasRef to get the actual image file
         const qrCodeCanvas = qrCodeRef.current.canvasRef.current;
-        // const qrCodeCanvas = qrCodeRef.current.querySelector("canvas"); // TODO test this out, first add ref to a parent div
-        // const qrCodeCanvas = qrCodeRef.current.context; // TODO what is in this?
         qrCodeBlob = await new Promise((resolve) =>
           qrCodeCanvas.toBlob(resolve)
         ) as Blob;
