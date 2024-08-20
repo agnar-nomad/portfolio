@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 
-// TODO try if moving login/logout redirect to RQ works too
 // TODO deploy and add domain url through the app in links
 // TODO add react hot toast?
 // TODO add link edit function?

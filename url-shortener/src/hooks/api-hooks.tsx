@@ -3,7 +3,7 @@ import { getClicksForSingleUrl, getClicksForUser, storeClicks } from "@/db/api-c
 import { createUrl, deleteUrl, getLongUrl, getSingleUrl, getUrls } from "@/db/api-urls"
 import { URLsType } from "@/types/supabase"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { useNavigate } from "react-router-dom"
+import { useUtilHelpers } from "./helper-hooks"
 
 
 export const queryKeys = {
@@ -40,14 +40,14 @@ export const useUser = () => {
 
 export const useLoginUser = () => {
   const queryClient = useQueryClient();
-  // const navigate = useNavigate();
+  const { createNewUrlSearchParam, navigate } = useUtilHelpers()
 
   return useMutation({
     mutationFn: login,
     onSuccess: () => {
-      // Invalidate and refetch
+      // Invalidate user and navigate
       queryClient.invalidateQueries({ queryKey: [queryKeys.currentUser] });
-      // navigate('/users'); TODO
+      navigate(`/dashboard?${createNewUrlSearchParam ? `createNew=${createNewUrlSearchParam}` : ''}`);
     },
     onError: () => {
       alert('Something went wrong, please try again.');
@@ -58,14 +58,14 @@ export const useLoginUser = () => {
 
 export const useSignupUser = () => {
   const queryClient = useQueryClient();
-  // const navigate = useNavigate();
+  const { createNewUrlSearchParam, navigate } = useUtilHelpers()
 
   return useMutation({
     mutationFn: signup,
     onSuccess: () => {
-      // Invalidate and refetch
+      // Invalidate and navigate
       queryClient.invalidateQueries({ queryKey: [queryKeys.currentUser] });
-      // navigate('/users'); TODO
+      navigate(`/dashboard?${createNewUrlSearchParam ? `createNew=${createNewUrlSearchParam}` : ''}`);
     },
     onError: () => {
       alert('Something went wrong, please try again.');
@@ -76,7 +76,7 @@ export const useSignupUser = () => {
 
 export const useLogoutUser = () => {
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
+  const { navigate } = useUtilHelpers();
 
   return useMutation({
     mutationFn: logout,
@@ -106,7 +106,7 @@ export const useFetchUrls = () => {
 }
 
 export const useCreateNewUrl = () => {
-  const navigate = useNavigate();
+  const { navigate } = useUtilHelpers();
 
   return useMutation({
     mutationFn: createUrl,
@@ -122,7 +122,7 @@ export const useCreateNewUrl = () => {
 
 export const useDeleteUrl = (urlId: URLsType["id"]) => {
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
+  const { navigate } = useUtilHelpers();
 
   return useMutation({
     mutationFn: () => deleteUrl(urlId),

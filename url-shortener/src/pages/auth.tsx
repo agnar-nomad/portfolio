@@ -1,30 +1,26 @@
-import { useSearchParams } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Login from '@/components/login';
 import Signup from '@/components/signup';
-import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useUser } from '@/hooks/api-hooks';
+import { useUtilHelpers } from '@/hooks/helper-hooks';
 
 export default function AuthPage() {
-  const [searchParams] = useSearchParams();
-
-  const longLink = searchParams.get('createNew');
-  const navigate = useNavigate();
 
   const { isLoading, isAuthenticated } = useUser();
+  const { createNewUrlSearchParam, navigate } = useUtilHelpers()
 
   useEffect(() => {
     if (isAuthenticated && !isLoading) {
-      navigate(`/dashboard?${longLink ? `createNew=${longLink}` : ''}`);
+      navigate(`/dashboard?${createNewUrlSearchParam ? `createNew=${createNewUrlSearchParam}` : ''}`);
     }
 
-  }, [isLoading, isAuthenticated]);
+  }, [isLoading, isAuthenticated, navigate, createNewUrlSearchParam]);
 
   return (
     <div className="mt-20 flex flex-col items-center gap-10">
       <h2 className="text-5xl font-extrabold">
-        {longLink ? (
+        {createNewUrlSearchParam ? (
           <span>Hold on. Let&apos;s log in first...</span>
         ) : (
           <span>Login / Signup</span>

@@ -25,13 +25,13 @@ type FormErrorKey = v.IssueDotPath<NewLinkSchema>
 export default function CreateLink() {
   const { user } = useUser();
   const [searchParams, setSearchParams] = useSearchParams();
-  const longLink = searchParams.get('createNew');
+  const createNewUrlSearchParam = searchParams.get('createNew');
 
   const qrCodeRef = useRef<QRCode>(null);
   const [formErrors, setFormErrors] = useState<Partial<Record<FormErrorKey, string>>>({});
   const [formValues, setFormValues] = useState<NewLinkSchemaType>({
     title: '',
-    longUrl: longLink ? longLink : '',
+    longUrl: createNewUrlSearchParam ? createNewUrlSearchParam : '',
     customUrl: '',
   });
 
@@ -92,7 +92,7 @@ export default function CreateLink() {
 
   return (
     <Dialog
-      defaultOpen={!!longLink}
+      defaultOpen={!!createNewUrlSearchParam}
       // open by default, if url search param is found
       onOpenChange={(res) => {
         // if we close the dialog, remove data from url bar too
