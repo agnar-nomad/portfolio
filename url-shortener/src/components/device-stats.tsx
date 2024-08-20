@@ -1,5 +1,6 @@
 import { ClicksType } from '@/types/supabase';
 import { PieChart, Pie, ResponsiveContainer, Cell, Tooltip } from 'recharts';
+import { Payload } from 'recharts/types/component/DefaultTooltipContent';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
@@ -44,9 +45,27 @@ export default function DeviceStats({ stats }: DeviceStatsProps) {
               />
             ))}
           </Pie>
-          <Tooltip />
+          <Tooltip content={<CustomTooltip />} />
         </PieChart>
       </ResponsiveContainer>
     </div>
   );
+}
+
+
+type CustomTooltipProps = {
+  payload?: Array<Payload<number, string>>,
+  label?: string,
+  active?: boolean
+}
+function CustomTooltip({ payload, active }: CustomTooltipProps) {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-gray-50 border-gray-400 border text-gray-800 p-2 w-max">
+        <p className=''>{`${payload[0].payload?.device}: ${payload[0].value} ${Number(payload[0].value) == 1 ? "click" : "clicks"}`}</p>
+      </div>
+    );
+  }
+
+  return null;
 }

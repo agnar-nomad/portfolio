@@ -141,7 +141,7 @@ export const useFetchSingleUrl = (urlId: URLsType["id"]) => {
   const { user } = useUser()
 
   return useQuery({
-    queryKey: [(queryKeys.singleUrl, urlId)],
+    queryKey: [queryKeys.singleUrl, urlId],
     queryFn: () => getSingleUrl({ userId: user?.id || "", urlId }),
     refetchOnReconnect: true,
     refetchOnWindowFocus: false,
@@ -151,7 +151,7 @@ export const useFetchSingleUrl = (urlId: URLsType["id"]) => {
 export const useFetchLongUrlFromShortUrl = (shortUrl: URLsType["short_url"] | URLsType["custom_url"]) => {
 
   return useQuery({
-    queryKey: [(queryKeys.longUrlFromShort, shortUrl)],
+    queryKey: [queryKeys.longUrlFromShort, shortUrl],
     queryFn: () => getLongUrl(shortUrl),
     refetchOnReconnect: true,
     refetchOnWindowFocus: false,
@@ -176,7 +176,7 @@ export const useFetchClicksForUser = (urlIdsList: URLsType["id"][]) => {
 export const useFetchClicksForSingleUrl = (urlId: URLsType["id"]) => {
 
   return useQuery({
-    queryKey: [(queryKeys.clicksForSingleUrl, urlId)],
+    queryKey: [queryKeys.clicksForSingleUrl, urlId],
     queryFn: () => getClicksForSingleUrl(urlId),
     refetchOnReconnect: true,
     refetchOnWindowFocus: false,

@@ -1,19 +1,21 @@
 import { ClicksType } from '@/types/supabase';
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   Tooltip,
   Legend,
   ResponsiveContainer,
+  BarChart,
+  Bar
 } from 'recharts';
+import { Payload } from 'recharts/types/component/DefaultTooltipContent';
 
 type LocationStatsProps = {
   stats: ClicksType[]
 }
 
 export default function LocationStats({ stats }: LocationStatsProps) {
+
   const cityCounts = stats.reduce((acc, item) => {
     const city = item.city || "unknown"
     if (acc[city]) {
@@ -21,28 +23,47 @@ export default function LocationStats({ stats }: LocationStatsProps) {
     } else {
       acc[city] = 1;
     }
-
     return acc;
-  }, {} as Record<string, number>);
+  }, {} as Record<string, number>)
 
   const data = Object.entries(cityCounts)
     .map(([city, count]) => ({
       city,
-      count,
+      visits: count,
+      country: stats.find(stat => stat.city === city)?.country || ""
     }))
     .slice(0, 10);
 
   return (
     <div className="w-full h-80">
       <ResponsiveContainer>
-        <LineChart width={700} height={300} data={data}>
+        <BarChart width={700} height={300} data={data}>
           <XAxis dataKey="city" />
           <YAxis />
-          <Tooltip labelStyle={{ color: 'green' }} />
+          <Tooltip content={<CustomTooltip />} />
           <Legend />
-          <Line type="monotone" dataKey="count" stroke="#8884d8" />
-        </LineChart>
+          <Bar dataKey="visits" fill="#8884d8" />
+        </BarChart>
       </ResponsiveContainer>
     </div>
   );
+}
+
+
+type CustomTooltipProps = {
+  payload?: Array<Payload<number, string>>,
+  label?: string,
+  active?: boolean
+}
+function CustomTooltip({ payload, active }: CustomTooltipProps) {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-gray-50 border-gray-400 border text-gray-800 p-2 w-max">
+        <p className=''>{`${payload[0].payload?.city}, ${payload[0].payload?.country}`}</p>
+        <p className=''>{`Visit count : ${payload[0].value}`}</p>
+      </div>
+    );
+  }
+
+  return null;
 }
