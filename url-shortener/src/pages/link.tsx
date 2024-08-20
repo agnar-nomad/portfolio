@@ -1,15 +1,14 @@
 import { LinkIcon } from 'lucide-react';
 import { useEffect } from 'react';
-import { Copy, Download, Trash2 } from 'lucide-react';
 import { useParams } from 'react-router-dom';
-import { BarLoader, BeatLoader } from 'react-spinners';
-import { Button } from '@/components/ui/button';
+import { BarLoader } from 'react-spinners';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import LocationStats from '@/components/location-stats';
 import DeviceStats from '@/components/device-stats';
-import { useDeleteUrl, useFetchClicksForSingleUrl, useFetchSingleUrl } from '@/hooks/api-hooks';
-import { downloadFile } from '@/lib/utils';
+import { useFetchClicksForSingleUrl, useFetchSingleUrl } from '@/hooks/api-hooks';
 import { useUtilHelpers } from '@/hooks/helper-hooks';
+import LinkActions from '@/components/link-actions';
+import toast from 'react-hot-toast';
 
 export default function LinkPage() {
   const { id } = useParams();
@@ -31,26 +30,12 @@ export default function LinkPage() {
     data: clicksData,
   } = useFetchClicksForSingleUrl(IdAsNum)
 
-  const { isPending: deleteLoading, mutate: deleteMutation } = useDeleteUrl(IdAsNum)
-
   useEffect(() => {
     if (urlError) {
       navigate('/dashboard');
+      toast.error("Something went wrong while fetching data.")
     }
   }, [navigate, urlError]);
-
-  const handleCopy = () => {
-    navigator?.clipboard.writeText(`https://trimmr.in/${urlData?.short_url}`);
-  };
-
-  const handleDownload = () => {
-    const imageUrl = urlData?.qr || "";
-    const fileName = urlData?.title || "file";
-
-    downloadFile(imageUrl, fileName)
-  };
-
-  const handleDelete = () => deleteMutation()
 
   let link = '';
   if (urlData) {
@@ -81,21 +66,10 @@ export default function LinkPage() {
           <span className="flex items-end font-extralight text-sm flex-1">
             {new Date(urlData?.created_at as string).toLocaleString()}
           </span>
-          <div className="flex gap-2">
-            <Button variant="ghost" onClick={handleCopy}>
-              <Copy className="" />
-            </Button>
-            <Button variant="ghost" onClick={handleDownload}>
-              <Download className="" />
-            </Button>
-            <Button variant="ghost" onClick={handleDelete}>
-              {deleteLoading ? (
-                <BeatLoader color="white" size={5} />
-              ) : (
-                <Trash2 className="text-red-500" />
-              )}
-            </Button>
-          </div>
+          {urlData ?
+            <LinkActions urlData={urlData} />
+            : null
+          }
           {urlData?.qr ?
             <img
               src={urlData.qr}

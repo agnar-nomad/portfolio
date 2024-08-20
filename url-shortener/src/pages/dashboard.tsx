@@ -25,14 +25,9 @@ export default function DashboardPage() {
     error: clicksError
   } = useFetchClicksForUser(urlIdsList || [])
 
-  console.log("urlsData", urlsData, "clicksData", clicksData);
-  
-
-//   useEffect(() => {
-//     if (urlsData?.length) {
-//       getClicksFn();
-//     }
-//   }, [urlsData?.length]);
+  if (urlsData && clicksData) {
+    console.log("urlsData", urlsData, "clicksData", clicksData);
+  }
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);

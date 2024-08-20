@@ -1,10 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Button } from './ui/button';
-import { Copy, Download, Trash2 } from 'lucide-react';
-import { BeatLoader } from 'react-spinners';
 import { URLsType } from '@/types/supabase';
-import { useDeleteUrl } from '@/hooks/api-hooks';
-import { downloadFile } from '@/lib/utils';
+import LinkActions from './link-actions';
 
 
 type LinkCardProp = {
@@ -12,21 +8,6 @@ type LinkCardProp = {
 }
 
 export default function LinkCard({ url }: LinkCardProp) {
-
-  const { isPending: deleteLoading, mutate: deleteMutation } = useDeleteUrl(url.id)
-
-  const handleCopy = () => {
-    navigator?.clipboard.writeText(`https://trimmr.in/${url?.short_url}`);
-  };
-
-  const handleDownload = () => {
-    const imageUrl = url?.qr || "";
-    const fileName = url?.title || "file";
-
-    downloadFile(imageUrl, fileName)
-  };
-
-  const handleDelete = () => deleteMutation()
 
   return (
     <article className="flex flex-col md:flex-row gap-5 border p-4 bg-gray-900 rounded-lg">
@@ -49,21 +30,10 @@ export default function LinkCard({ url }: LinkCardProp) {
           {new Date(url.created_at).toLocaleString()}
         </span>
       </Link>
-      <div className="flex gap-2">
-        <Button variant="ghost" onClick={handleCopy}>
-          <Copy />
-        </Button>
-        <Button variant="ghost" onClick={handleDownload}>
-          <Download />
-        </Button>
-        <Button variant="ghost" onClick={handleDelete}>
-          {deleteLoading ? (
-            <BeatLoader color="white" size={5} />
-          ) : (
-            <Trash2 className="text-red-500" />
-          )}
-        </Button>
-      </div>
+      {url ?
+        <LinkActions urlData={url} />
+        : null
+      }
     </article>
   );
 }

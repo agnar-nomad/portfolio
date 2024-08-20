@@ -5,9 +5,10 @@ import './index.css'
 
 // TODO deploy and add domain url through the app in links
 // TODO add link edit function?
-// TODO extract link actions
+// TODO parallelise clicks and urls fetching on the dashboard
 // TODO rebrand and change images
 // TODO reformat all files
+// TODO finish TODOs
 // TODO add demo data and show demo account info on HOmepage
 
 createRoot(document.getElementById('root')!).render(
