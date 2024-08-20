@@ -1,4 +1,4 @@
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import {
   Card,
   CardContent,
@@ -12,9 +12,12 @@ import { Button } from './ui/button';
 import { BeatLoader } from 'react-spinners';
 import InputError from './input-error';
 import { SignupSchema, SignupSchemaType } from '@/lib/schemas';
-import { useNavigate, useSearchParams} from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useSignupUser } from '@/hooks/api-hooks';
 import * as v from 'valibot';
+
+type SignupSchema = typeof SignupSchema
+type FormErrorKey = v.IssueDotPath<SignupSchema>
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -24,7 +27,7 @@ export default function Signup() {
     password: '',
     name: '',
   });
-  const [formErrors, setFormErrors] = useState<Partial<Omit<SignupSchemaType, "profile_img">> & { profile_img: string }>();
+  const [formErrors, setFormErrors] = useState<Partial<Record<FormErrorKey, string>>>({});
 
   const longLink = searchParams.get('createNew');
 
@@ -50,7 +53,7 @@ export default function Signup() {
   }, [signupData, signupError, signupLoading]);
 
   const handleSignup = async () => {
-    setFormErrors(undefined);
+    setFormErrors({});
 
     try {
       // validate form data
@@ -59,19 +62,21 @@ export default function Signup() {
       // api call
       await signupMutationAsync(formData as SignupSchemaType)
     } catch (error) {
-      if (error instanceof v.ValiError && error.issues) {
-        const flatIssues = v.flatten<typeof SignupSchema>(error?.issues)
-        console.log("flatIssues", flatIssues);
-        const newErrors = {};
+      if (v.isValiError<SignupSchema>(error)) {
+        // specific error handling from Valibot
+        const flatIssues = v.flatten<SignupSchema>(error.issues)
+        const newErrors: Partial<Record<FormErrorKey, string>> = {};
 
-        Object.entries(flatIssues.nested).forEach(([key, value]) => {
-          newErrors[key] = value[0]
-        })
+        for (const key in flatIssues.nested) {
+          newErrors[key as FormErrorKey] =
+            flatIssues.nested[key as FormErrorKey]![0];
+        }
 
         setFormErrors(newErrors);
 
       } else {
-        console.error("Login Error", error?.message, error)
+        console.error("Signup Error", error)
+        throw error
       }
     }
   };

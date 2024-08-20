@@ -19,13 +19,16 @@ import { NewLinkSchema, NewLinkSchemaType } from '@/lib/schemas';
 import { useCreateNewUrl, useUser } from '@/hooks/api-hooks';
 import * as v from 'valibot';
 
+type NewLinkSchema = typeof NewLinkSchema
+type FormErrorKey = v.IssueDotPath<NewLinkSchema>
+
 export default function CreateLink() {
   const { user } = useUser();
   const [searchParams, setSearchParams] = useSearchParams();
   const longLink = searchParams.get('createNew');
 
   const qrCodeRef = useRef<QRCode>(null);
-  const [formErrors, setFormErrors] = useState<Partial<NewLinkSchemaType>>({});
+  const [formErrors, setFormErrors] = useState<Partial<Record<FormErrorKey, string>>>({});
   const [formValues, setFormValues] = useState<NewLinkSchemaType>({
     title: '',
     longUrl: longLink ? longLink : '',
@@ -57,27 +60,31 @@ export default function CreateLink() {
       if (qrCodeRef.current) {
         // extract the qr code image from the component
         const qrCodeCanvas = qrCodeRef.current.canvasRef.current;
+        // const qrCodeCanvas = qrCodeRef.current.querySelector("canvas"); // TODO test this out, first add ref to a parent div
+        // const qrCodeCanvas = qrCodeRef.current.context; // TODO what is in this?
         qrCodeBlob = await new Promise((resolve) =>
           qrCodeCanvas.toBlob(resolve)
         ) as Blob;
       }
 
       // send all data to API
-      await createUrlMutationAsync({ ...formValues, userId: user?.id ?? "", qrCode: qrCodeBlob }); 
+      await createUrlMutationAsync({ ...formValues, userId: user?.id ?? "", qrCode: qrCodeBlob });
     } catch (error) {
-      if (error instanceof v.ValiError && error.issues) {
-        const flatIssues = v.flatten<typeof NewLinkSchema>(error?.issues)
-        console.log("flatIssues", flatIssues);
-        const newErrors = {};
+      if (v.isValiError<NewLinkSchema>(error)) {
+        // specific error handling from Valibot
+        const flatIssues = v.flatten<NewLinkSchema>(error.issues)
+        const newErrors: Partial<Record<FormErrorKey, string>> = {};
 
-        Object.entries(flatIssues.nested).forEach(([key, value]) => {
-          newErrors[key] = value[0]
-        })
+        for (const key in flatIssues.nested) {
+          newErrors[key as FormErrorKey] =
+            flatIssues.nested[key as FormErrorKey]![0];
+        }
 
         setFormErrors(newErrors);
 
       } else {
-        console.error("Create New Link Error", error?.message, error)
+        console.error("Create New Link Error", error)
+        throw error
       }
     }
   };

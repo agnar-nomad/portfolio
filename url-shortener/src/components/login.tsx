@@ -18,6 +18,9 @@ import { useSearchParams } from 'react-router-dom';
 import { useLoginUser } from '@/hooks/api-hooks';
 import * as v from 'valibot';
 
+type LoginSchema = typeof LoginSchema
+type FormErrorKey = v.IssueDotPath<LoginSchema>
+
 export default function Login() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -25,7 +28,7 @@ export default function Login() {
     email: '',
     password: '',
   });
-  const [formErrors, setFormErrors] = useState<Partial<LoginSchemaType>>();
+  const [formErrors, setFormErrors] = useState<Partial<Record<FormErrorKey, string>>>({});
 
   const longLink = searchParams.get('createNew');
 
@@ -60,19 +63,21 @@ export default function Login() {
       // api call
       await loginMutationAsync(formData)
     } catch (error) {
-      if (error instanceof v.ValiError && error.issues) {
-        const flatIssues = v.flatten<typeof LoginSchema>(error?.issues)
-        console.log("flatIssues", flatIssues);
-        const newErrors = {};
+      if (v.isValiError<LoginSchema>(error)) {
+        // specific error handling from Valibot
+        const flatIssues = v.flatten<LoginSchema>(error.issues)
+        const newErrors: Partial<Record<FormErrorKey, string>> = {};
 
-        Object.entries(flatIssues.nested).forEach(([key, value]) => {
-          newErrors[key] = value[0]
-        })
+        for (const key in flatIssues.nested) {
+          newErrors[key as FormErrorKey] =
+            flatIssues.nested[key as FormErrorKey]![0];
+        }
 
         setFormErrors(newErrors);
 
       } else {
-        console.error("Login Error", error?.message, error)
+        console.error("Login Error", error)
+        throw error
       }
     }
   };

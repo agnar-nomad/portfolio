@@ -11,7 +11,6 @@ export async function getCurrentUser() {
   return data.session?.user;
 }
 
-
 export async function login({ email, password }: LoginSchemaType) {
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
@@ -23,15 +22,13 @@ export async function login({ email, password }: LoginSchemaType) {
   return data;
 }
 
-
 export async function signup({
   name,
   email,
   password,
   profile_img,
 }: SignupSchemaType) {
-
-    // upload the profile image first
+  // upload the profile image first
   const fileName = `img-${name
     .split(' ')
     .join('-')}-${new Date().toLocaleString()}`;
