@@ -10,6 +10,7 @@ import LinkPage from './pages/link';
 import RedirectLinkPage from './pages/redirect-link';
 import { RouterProvider } from 'react-router-dom';
 import RequireAuth from './components/require-auth';
+import { Toaster } from 'react-hot-toast';
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,9 @@ export default function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
+        <Toaster position="bottom-right"
+          toastOptions={{ className: "bg-background text-primary border" }}
+          containerStyle={{ bottom: 50, right: 50, }} />
         <ReactQueryDevtools />
       </QueryClientProvider>
     </>

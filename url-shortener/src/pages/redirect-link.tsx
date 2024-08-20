@@ -25,11 +25,11 @@ export default function RedirectLinkPage() {
         originalUrl: longUrlData.original_url as string,
       });
     }
-  }, [longUrlLoading, longUrlData?.id]);
+  }, [longUrlLoading, longUrlData?.id, longUrlData?.original_url]);
 
-  if(longUrlError && !longUrlLoading) {
+  if (longUrlError && !longUrlLoading) {
     return (
-        <InputError message={longUrlError.message} />
+      <InputError message={longUrlError.message} />
     )
   }
 

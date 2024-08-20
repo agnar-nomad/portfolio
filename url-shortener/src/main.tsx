@@ -4,8 +4,8 @@ import App from './App.tsx'
 import './index.css'
 
 // TODO deploy and add domain url through the app in links
-// TODO add react hot toast?
 // TODO add link edit function?
+// TODO extract link actions
 // TODO rebrand and change images
 // TODO reformat all files
 // TODO add demo data and show demo account info on HOmepage

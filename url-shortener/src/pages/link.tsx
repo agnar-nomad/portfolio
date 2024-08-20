@@ -1,7 +1,6 @@
 import { LinkIcon } from 'lucide-react';
 import { useEffect } from 'react';
 import { Copy, Download, Trash2 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { BarLoader, BeatLoader } from 'react-spinners';
 import { Button } from '@/components/ui/button';
@@ -10,13 +9,14 @@ import LocationStats from '@/components/location-stats';
 import DeviceStats from '@/components/device-stats';
 import { useDeleteUrl, useFetchClicksForSingleUrl, useFetchSingleUrl } from '@/hooks/api-hooks';
 import { downloadFile } from '@/lib/utils';
+import { useUtilHelpers } from '@/hooks/helper-hooks';
 
 export default function LinkPage() {
   const { id } = useParams();
-  const navigate = useNavigate();
+  const { navigate } = useUtilHelpers();
 
   let IdAsNum = Number(id)
-  if(isNaN(IdAsNum)) {
+  if (isNaN(IdAsNum)) {
     IdAsNum = -1
   }
 
@@ -37,7 +37,7 @@ export default function LinkPage() {
     if (urlError) {
       navigate('/dashboard');
     }
-  }, [urlError]);
+  }, [navigate, urlError]);
 
   const handleCopy = () => {
     navigator?.clipboard.writeText(`https://trimmr.in/${urlData?.short_url}`);
@@ -96,15 +96,15 @@ export default function LinkPage() {
               )}
             </Button>
           </div>
-          {urlData?.qr ? 
+          {urlData?.qr ?
             <img
-            src={urlData.qr}
-            alt="QR code"
-            className="w-full self-center sm:self-start object-contain ring ring-blue-500 p-1"
+              src={urlData.qr}
+              alt="QR code"
+              className="w-full self-center sm:self-start object-contain ring ring-blue-500 p-1"
             />
             : null}
         </section>
-        
+
         <section className="sm:w-3/5">
           <Card className="w-full h-full">
             <CardHeader>

@@ -4,6 +4,7 @@ import { createUrl, deleteUrl, getLongUrl, getSingleUrl, getUrls } from "@/db/ap
 import { URLsType } from "@/types/supabase"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useUtilHelpers } from "./helper-hooks"
+import toast from "react-hot-toast"
 
 
 export const queryKeys = {
@@ -47,6 +48,7 @@ export const useLoginUser = () => {
     onSuccess: () => {
       // Invalidate user and navigate
       queryClient.invalidateQueries({ queryKey: [queryKeys.currentUser] });
+      toast.success("Login successful")
       navigate(`/dashboard?${createNewUrlSearchParam ? `createNew=${createNewUrlSearchParam}` : ''}`);
     },
     onError: () => {
@@ -65,6 +67,7 @@ export const useSignupUser = () => {
     onSuccess: () => {
       // Invalidate and navigate
       queryClient.invalidateQueries({ queryKey: [queryKeys.currentUser] });
+      toast.success("Signup successful")
       navigate(`/dashboard?${createNewUrlSearchParam ? `createNew=${createNewUrlSearchParam}` : ''}`);
     },
     onError: () => {
@@ -81,7 +84,7 @@ export const useLogoutUser = () => {
   return useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      // Invalidate and refetch
+      // Invalidate and navigate
       queryClient.invalidateQueries({ queryKey: [queryKeys.currentUser] });
       navigate('/');
     },
@@ -111,8 +114,9 @@ export const useCreateNewUrl = () => {
   return useMutation({
     mutationFn: createUrl,
     onSuccess: (newUrlData) => {
-      navigate(`/link/${newUrlData[0].id}`);
       console.log("New Url Link created successfully")
+      toast.success("New link created successfully")
+      navigate(`/link/${newUrlData[0].id}`);
     },
     onError: () => {
       alert('Something went wrong, please try again.');
@@ -129,6 +133,7 @@ export const useDeleteUrl = (urlId: URLsType["id"]) => {
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: [queryKeys.urls] });
+      toast.success("Link successfully deleted")
       navigate('/dashboard');
     },
     onError: () => {
