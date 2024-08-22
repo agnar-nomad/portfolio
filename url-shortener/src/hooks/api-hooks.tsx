@@ -173,7 +173,7 @@ export const useFetchClicksForUser = (urlIdsList: URLsType["id"][]) => {
   return useQuery({
     queryKey: [queryKeys.clicksUser],
     queryFn: () => getClicksForUser(urlIdsList),
-    enabled: !!urlIdsList.length,
+    enabled: !!urlIdsList.length,   // query that is dependent on the existence of its input which is also an async value
     refetchOnReconnect: true,
     refetchOnWindowFocus: false,
   })

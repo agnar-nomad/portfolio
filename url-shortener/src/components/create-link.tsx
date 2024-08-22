@@ -107,7 +107,15 @@ export default function CreateLink() {
         </DialogHeader>
 
         {formValues?.longUrl ? (
-          <QRCode value={formValues?.longUrl} size={150} ref={qrCodeRef} />
+          <QRCode value={formValues?.longUrl}
+            size={150}
+            ref={qrCodeRef}
+            // bgColor=''
+            // fgColor=''
+            // TODO colors
+            qrStyle='fluid'
+            eyeRadius={10}
+          />
         ) : null}
 
         <Input
