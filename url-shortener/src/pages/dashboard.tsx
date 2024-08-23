@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { BarLoader } from 'react-spinners';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Filter } from 'lucide-react';
@@ -7,6 +6,7 @@ import InputError from '@/components/input-error';
 import LinkCard from '@/components/link-card';
 import CreateLink from '@/components/create-link';
 import { useFetchClicksForUser, useFetchUrls } from '@/hooks/api-hooks';
+import ProgressIndicator from '@/components/progress-indicator';
 
 export default function DashboardPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -40,7 +40,7 @@ export default function DashboardPage() {
   return (
     <div className="flex flex-col gap-8">
       {(urlsLoading || clicksLoading) && (
-        <BarLoader width={'100%'} color="#36d7b7" />
+        <ProgressIndicator />
       )}
       <section className="grid grid-cols-2 gap-4">
         <Card>

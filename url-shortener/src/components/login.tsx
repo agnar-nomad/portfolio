@@ -9,11 +9,11 @@ import {
 } from '@/components/ui/card';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
-import { BeatLoader } from 'react-spinners';
 import InputError from './input-error';
 import { LoginSchema, LoginSchemaType } from '@/lib/schemas';
 import { useLoginUser } from '@/hooks/api-hooks';
 import * as v from 'valibot';
+import LoaderIndicator from './loader-indicator';
 
 type LoginSchema = typeof LoginSchema
 type FormErrorKey = v.IssueDotPath<LoginSchema>
@@ -96,7 +96,7 @@ export default function Login() {
       </CardContent>
       <CardFooter>
         <Button onClick={handleLogin}>
-          {loginLoading ? <BeatLoader size={10} color="#36d7b7" /> : 'Login'}
+          {loginLoading ? <LoaderIndicator /> : 'Login'}
         </Button>
       </CardFooter>
     </Card>

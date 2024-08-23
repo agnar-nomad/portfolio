@@ -1,8 +1,8 @@
-import InputError from '@/components/input-error';
-import { useFetchLongUrlFromShortUrl, useReportUrlClick } from '@/hooks/api-hooks';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { BarLoader } from 'react-spinners';
+import InputError from '@/components/input-error';
+import ProgressIndicator from '@/components/progress-indicator';
+import { useFetchLongUrlFromShortUrl, useReportUrlClick } from '@/hooks/api-hooks';
 
 export default function RedirectLinkPage() {
   // pick up link param = short url or custom url
@@ -36,7 +36,7 @@ export default function RedirectLinkPage() {
   if (longUrlLoading || reportClickLoading) {
     return (
       <>
-        <BarLoader width={'100%'} color="#36d7b7" />
+        <ProgressIndicator />
         <br />
         Redirecting...
       </>

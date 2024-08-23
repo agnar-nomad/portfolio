@@ -1,7 +1,6 @@
 import { LinkIcon } from 'lucide-react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { BarLoader } from 'react-spinners';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import LocationStats from '@/components/location-stats';
 import DeviceStats from '@/components/device-stats';
@@ -10,6 +9,7 @@ import { useUtilHelpers } from '@/hooks/helper-hooks';
 import LinkActions from '@/components/link-actions';
 import toast from 'react-hot-toast';
 import { websiteDomain, websiteShortcut } from '@/lib/config';
+import ProgressIndicator from '@/components/progress-indicator';
 
 export default function LinkPage() {
   const { id } = useParams();
@@ -46,7 +46,7 @@ export default function LinkPage() {
   return (
     <>
       {(clicksLoading || urlLoading) && (
-        <BarLoader className="mb-4" width={'100%'} color="#36d7b7" />
+        <ProgressIndicator />
       )}
       <div className="flex flex-col sm:flex-row gap-8 justify-between">
         <section className="flex flex-col items-start sm:w-2/5 gap-8 rounded-lg">

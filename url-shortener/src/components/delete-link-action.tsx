@@ -11,9 +11,9 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Trash2 } from 'lucide-react';
 import { Button } from './ui/button';
-import { BeatLoader } from 'react-spinners';
 import { useDeleteUrl } from "@/hooks/api-hooks";
 import { URLsType } from "@/types/supabase";
+import LoaderIndicator from "./loader-indicator";
 
 
 type DeleteLinkProps = {
@@ -31,7 +31,7 @@ export default function DeleteLink({ urlId }: DeleteLinkProps) {
         <AlertDialogTrigger asChild>
           <Button variant="ghost">
             {deleteLoading ? (
-              <BeatLoader color="white" size={5} />
+              <LoaderIndicator smaller />
             ) : (
               <Trash2 className="text-red-500" />
             )}

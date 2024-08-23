@@ -9,11 +9,11 @@ import {
 } from '@/components/ui/card';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
-import { BeatLoader } from 'react-spinners';
 import InputError from './input-error';
 import { SignupSchema, SignupSchemaType } from '@/lib/schemas';
 import { useSignupUser } from '@/hooks/api-hooks';
 import * as v from 'valibot';
+import LoaderIndicator from './loader-indicator';
 
 type SignupSchema = typeof SignupSchema
 type FormErrorKey = v.IssueDotPath<SignupSchema>
@@ -115,7 +115,7 @@ export default function Signup() {
       <CardFooter>
         <Button onClick={handleSignup}>
           {signupLoading ? (
-            <BeatLoader size={10} color="#36d7b7" />
+            <LoaderIndicator />
           ) : (
             'Create Account'
           )}

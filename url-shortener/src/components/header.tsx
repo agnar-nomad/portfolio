@@ -12,8 +12,8 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { LogOut } from 'lucide-react';
 import { LinkIcon } from 'lucide-react';
-import { BarLoader } from 'react-spinners';
 import { useLogoutUser, useUser } from '@/hooks/api-hooks';
+import ProgressIndicator from './progress-indicator';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -67,7 +67,7 @@ export default function Header() {
           )}
         </div>
       </nav>
-      {logoutLoading && <BarLoader className="mb-4" width={'100%'} color="#36d7b7" />}
+      {logoutLoading && <ProgressIndicator />}
     </>
   );
 }

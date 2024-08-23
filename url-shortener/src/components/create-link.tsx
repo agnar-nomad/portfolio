@@ -14,11 +14,11 @@ import { Card } from './ui/card';
 import { useState } from 'react';
 import { QRCode } from 'react-qrcode-logo';
 import { useRef } from 'react';
-import { BeatLoader } from 'react-spinners';
 import { NewLinkSchema, NewLinkSchemaType } from '@/lib/schemas';
 import { useCreateNewUrl, useUser } from '@/hooks/api-hooks';
 import * as v from 'valibot';
 import { darkPurple, websiteShortcut } from '@/lib/config';
+import LoaderIndicator from './loader-indicator';
 
 type NewLinkSchema = typeof NewLinkSchema
 type FormErrorKey = v.IssueDotPath<NewLinkSchema>
@@ -146,7 +146,7 @@ export default function CreateLink() {
         <DialogFooter>
           <Button onClick={createNewLink} disabled={createUrlLoading}>
             {createUrlLoading ? (
-              <BeatLoader size={10} color="grey" />
+              <LoaderIndicator />
             ) : (
               'Create'
             )}

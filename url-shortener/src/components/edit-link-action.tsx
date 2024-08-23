@@ -12,7 +12,6 @@ import { Input } from './ui/input';
 import InputError from './input-error';
 import { Card } from './ui/card';
 import { useState } from 'react';
-import { BeatLoader } from 'react-spinners';
 import { NewLinkSchema, NewLinkSchemaType } from '@/lib/schemas';
 import { useEditUrl } from '@/hooks/api-hooks';
 import * as v from 'valibot';
@@ -20,6 +19,7 @@ import { Edit } from 'lucide-react';
 import { URLsType } from '@/types/supabase';
 import { Label } from './ui/label';
 import { websiteShortcut } from '@/lib/config';
+import LoaderIndicator from './loader-indicator';
 
 type NewLinkSchema = typeof NewLinkSchema
 type FormErrorKey = v.IssueDotPath<NewLinkSchema>
@@ -139,7 +139,7 @@ export default function EditLink({ urlData }: EditLinkProps) {
           </DialogClose>
           <Button onClick={handleEditUrl} disabled={editUrlLoading}>
             {editUrlLoading ? (
-              <BeatLoader size={10} color="grey" />
+              <LoaderIndicator />
             ) : (
               'Save changes'
             )}
