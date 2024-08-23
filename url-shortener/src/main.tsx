@@ -4,7 +4,6 @@ import App from './App.tsx'
 import './index.css'
 
 // TODO deploy and add domain url through the app in links
-// TODO add link edit function?
 // TODO rebrand and change images
 // TODO reformat all files
 // TODO finish TODOs

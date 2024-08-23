@@ -56,7 +56,7 @@ export async function createUrl({
     qrCodeUrl = `${supabaseUrl}/storage/v1/object/public/qrs/${fileName}`;
   }
 
-//   upload new url together with qrcode
+  //   upload new url together with qrcode
   const { data, error } = await supabase
     .from('urls')
     .insert([
@@ -79,7 +79,29 @@ export async function createUrl({
   return data;
 }
 
-export async function getLongUrl(id: URLsType["short_url"] | URLsType["custom_url"]) {
+type EditUrlApiProps = NewLinkSchemaType & {
+  urlId: URLsType['id'];
+};
+export async function editUrl({ title, customUrl, urlId }: EditUrlApiProps) {
+  const { data, error } = await supabase
+    .from('urls')
+    .update({
+      title,
+      custom_url: customUrl || null,
+    })
+    .eq('id', urlId);
+
+  if (error) {
+    console.error(error.message);
+    throw new Error('Error updating URL');
+  }
+
+  return data;
+}
+
+export async function getLongUrl(
+  id: URLsType['short_url'] | URLsType['custom_url']
+) {
   // get original url based on the short one
   const { data, error } = await supabase
     .from('urls')
@@ -87,7 +109,7 @@ export async function getLongUrl(id: URLsType["short_url"] | URLsType["custom_ur
     .or(`short_url.eq.${id},custom_url.eq.${id}`)
     .single();
   // either short url or custom url can be used in the user's shortened link, so fetch by querying those
-//   MAIN functionality
+  //   MAIN functionality
 
   if (error) {
     console.error(error.message);

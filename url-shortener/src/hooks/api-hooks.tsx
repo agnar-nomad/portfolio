@@ -1,10 +1,11 @@
 import { getCurrentUser, login, logout, signup } from "@/db/api-auth"
 import { getClicksForSingleUrl, getClicksForUser, storeClicks } from "@/db/api-clicks"
-import { createUrl, deleteUrl, getLongUrl, getSingleUrl, getUrls } from "@/db/api-urls"
+import { createUrl, deleteUrl, editUrl, getLongUrl, getSingleUrl, getUrls } from "@/db/api-urls"
 import { URLsType } from "@/types/supabase"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useUtilHelpers } from "./helper-hooks"
 import toast from "react-hot-toast"
+import { useLocation } from "react-router-dom"
 
 
 export const queryKeys = {
@@ -95,6 +96,7 @@ export const useLogoutUser = () => {
 };
 
 
+
 // URL table fetchers
 
 export const useFetchUrls = () => {
@@ -117,6 +119,30 @@ export const useCreateNewUrl = () => {
       console.log("New Url Link created successfully")
       toast.success("New link created successfully")
       navigate(`/link/${newUrlData[0].id}`);
+    },
+    onError: () => {
+      alert('Something went wrong, please try again.');
+    },
+  });
+}
+
+export const useEditUrl = () => {
+  const queryClient = useQueryClient();
+  const loc = useLocation()
+  const pathIsDashboard = loc.pathname.includes("dashboard")
+  const pathIsLinkPage = loc.pathname.includes("link/")
+
+  return useMutation({
+    mutationFn: editUrl,
+    onSuccess: (_, variables) => {
+      if (pathIsDashboard) {
+        queryClient.invalidateQueries({ queryKey: [queryKeys.urls] })
+      }
+      if (pathIsLinkPage) {
+        queryClient.invalidateQueries({ queryKey: [queryKeys.singleUrl, variables.urlId] })
+      }
+
+      toast.success("Link data updated successfully")
     },
     onError: () => {
       alert('Something went wrong, please try again.');
@@ -190,7 +216,6 @@ export const useFetchClicksForSingleUrl = (urlId: URLsType["id"]) => {
 }
 
 export const useReportUrlClick = () => {
-
   return useMutation({
     mutationFn: storeClicks,
     onSuccess: () => {

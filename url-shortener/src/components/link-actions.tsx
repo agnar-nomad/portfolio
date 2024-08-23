@@ -1,21 +1,10 @@
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { useDeleteUrl } from '@/hooks/api-hooks';
-import { downloadFile } from '@/lib/utils';
 import { URLsType } from '@/types/supabase';
-import { Copy, Download, Trash2 } from 'lucide-react';
+import { Copy, Download } from 'lucide-react';
 import { Button } from './ui/button';
-import { BeatLoader } from 'react-spinners';
+import { downloadFile } from '@/lib/utils';
 import toast from "react-hot-toast";
+import EditLink from "./edit-link-action";
+import DeleteLink from "./delete-link-action";
 
 
 type LinkActionsProps = {
@@ -23,8 +12,6 @@ type LinkActionsProps = {
 }
 
 export default function LinkActions({ urlData }: LinkActionsProps) {
-
-  const { isPending: deleteLoading, mutate: deleteMutation } = useDeleteUrl(urlData.id)
 
   const handleCopy = () => {
     try {
@@ -45,9 +32,6 @@ export default function LinkActions({ urlData }: LinkActionsProps) {
     }
   };
 
-  const handleDelete = () => deleteMutation()
-
-
   return (
     <div className="flex gap-2">
       <Button variant="ghost" onClick={handleCopy}>
@@ -57,31 +41,11 @@ export default function LinkActions({ urlData }: LinkActionsProps) {
         <Download className="" />
       </Button>
 
-      <AlertDialog>
-        <AlertDialogTrigger asChild>
-          <Button variant="ghost">
-            {deleteLoading ? (
-              <BeatLoader color="white" size={5} />
-            ) : (
-              <Trash2 className="text-red-500" />
-            )}
-          </Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This will permanently delete your link and all its data.
-              <br />
-              This action cannot be undone.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete}>Continue</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <EditLink urlData={urlData} />
+
+      <DeleteLink urlId={urlData.id} />
+
+
     </div>
   )
 }
