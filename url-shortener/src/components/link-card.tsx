@@ -12,7 +12,7 @@ export default function LinkCard({ url }: LinkCardProp) {
 
   const fancyLinkToShow = `https://${websiteShortcut}/${url?.custom_url ? url.custom_url : url.short_url}`
   return (
-    <article className="flex flex-col md:flex-row gap-5 border p-4 bg-gray-900 rounded-lg">
+    <article className="flex flex-col md:flex-row gap-5 border p-4 rounded-lg">
       <img
         src={url?.qr || ""}
         alt="QR code"
@@ -22,7 +22,7 @@ export default function LinkCard({ url }: LinkCardProp) {
         <h3 className="text-3xl font-extrabold hover:underline cursor-pointer">
           {url?.title}
         </h3>
-        <span className="text-2xl text-blue-400 font-bold hover:underline cursor-pointer">
+        <span className="text-2xl text-accent font-bold hover:underline cursor-pointer">
           {fancyLinkToShow}
         </span>
         <span className=" hover:underline cursor-pointer">

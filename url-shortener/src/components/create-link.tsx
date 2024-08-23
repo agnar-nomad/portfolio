@@ -18,7 +18,7 @@ import { BeatLoader } from 'react-spinners';
 import { NewLinkSchema, NewLinkSchemaType } from '@/lib/schemas';
 import { useCreateNewUrl, useUser } from '@/hooks/api-hooks';
 import * as v from 'valibot';
-import { websiteShortcut } from '@/lib/config';
+import { darkPurple, websiteShortcut } from '@/lib/config';
 
 type NewLinkSchema = typeof NewLinkSchema
 type FormErrorKey = v.IssueDotPath<NewLinkSchema>
@@ -99,8 +99,7 @@ export default function CreateLink() {
         if (!res) setSearchParams({});
       }}>
       <DialogTrigger asChild>
-        <Button variant="destructive">Create New Link</Button>
-        {/* TODO not destructive */}
+        <Button variant="accent" className='font-bold'>Create New Link</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
@@ -111,9 +110,7 @@ export default function CreateLink() {
           <QRCode value={formValues?.longUrl}
             size={150}
             ref={qrCodeRef}
-            // bgColor=''
-            // fgColor=''
-            // TODO colors
+            fgColor={darkPurple}
             qrStyle='fluid'
             eyeRadius={10}
           />

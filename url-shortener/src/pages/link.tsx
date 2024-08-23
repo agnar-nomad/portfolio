@@ -52,9 +52,9 @@ export default function LinkPage() {
         <section className="flex flex-col items-start sm:w-2/5 gap-8 rounded-lg">
           <h2 className="text-6xl font-extrabold">{urlData?.title}</h2>
           <a
-            href={`https://${websiteDomain}/${shortlink}`}
+            href={`${websiteDomain}/${shortlink}`}
             target="_blank"
-            className="text-3xl sm:text-4xl font-bold text-blue-400 hover:underline">
+            className="text-3xl sm:text-4xl font-bold text-accent hover:underline">
             https://{websiteShortcut}/{shortlink}
           </a>
           <a
