@@ -19,6 +19,7 @@ import * as v from 'valibot';
 import { Edit } from 'lucide-react';
 import { URLsType } from '@/types/supabase';
 import { Label } from './ui/label';
+import { websiteShortcut } from '@/lib/config';
 
 type NewLinkSchema = typeof NewLinkSchema
 type FormErrorKey = v.IssueDotPath<NewLinkSchema>
@@ -120,7 +121,7 @@ export default function EditLink({ urlData }: EditLinkProps) {
         />
         <Label htmlFor='customUrl'>Custom URL</Label>
         <span className="flex items-center gap-2">
-          <Card className="p-2">trimmr.in</Card> /
+          <Card className="p-2">{websiteShortcut}</Card> /
           <Input
             id="customUrl"
             placeholder="Custom link (optional)"

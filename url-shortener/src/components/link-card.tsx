@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { URLsType } from '@/types/supabase';
 import LinkActions from './link-actions';
+import { websiteShortcut } from '@/lib/config';
 
 
 type LinkCardProp = {
@@ -9,6 +10,7 @@ type LinkCardProp = {
 
 export default function LinkCard({ url }: LinkCardProp) {
 
+  const fancyLinkToShow = `https://${websiteShortcut}/${url?.custom_url ? url.custom_url : url.short_url}`
   return (
     <article className="flex flex-col md:flex-row gap-5 border p-4 bg-gray-900 rounded-lg">
       <img
@@ -21,7 +23,7 @@ export default function LinkCard({ url }: LinkCardProp) {
           {url?.title}
         </h3>
         <span className="text-2xl text-blue-400 font-bold hover:underline cursor-pointer">
-          https://trimmr.in/{url?.custom_url ? url?.custom_url : url.short_url}
+          {fancyLinkToShow}
         </span>
         <span className=" hover:underline cursor-pointer">
           {url.original_url}

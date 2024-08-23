@@ -9,6 +9,7 @@ import { useFetchClicksForSingleUrl, useFetchSingleUrl } from '@/hooks/api-hooks
 import { useUtilHelpers } from '@/hooks/helper-hooks';
 import LinkActions from '@/components/link-actions';
 import toast from 'react-hot-toast';
+import { websiteDomain, websiteShortcut } from '@/lib/config';
 
 export default function LinkPage() {
   const { id } = useParams();
@@ -37,9 +38,9 @@ export default function LinkPage() {
     }
   }, [navigate, urlError]);
 
-  let link = '';
+  let shortlink = '';
   if (urlData) {
-    link = urlData?.custom_url ? urlData?.custom_url : urlData.short_url as string;
+    shortlink = urlData?.custom_url ? urlData.custom_url : urlData.short_url as string;
   }
 
   return (
@@ -51,10 +52,10 @@ export default function LinkPage() {
         <section className="flex flex-col items-start sm:w-2/5 gap-8 rounded-lg">
           <h2 className="text-6xl font-extrabold">{urlData?.title}</h2>
           <a
-            href={`https://trimmr.in/${link}`}
+            href={`https://${websiteDomain}/${shortlink}`}
             target="_blank"
             className="text-3xl sm:text-4xl font-bold text-blue-400 hover:underline">
-            https://trimmr.in/{link}
+            https://{websiteShortcut}/{shortlink}
           </a>
           <a
             href={urlData?.original_url as string}

@@ -11,12 +11,12 @@ import RedirectLinkPage from './pages/redirect-link';
 import { RouterProvider } from 'react-router-dom';
 import RequireAuth from './components/require-auth';
 import { Toaster } from 'react-hot-toast';
+import ErrorPage from './components/error-boundary';
 
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
-    // errorElement: <ErrorPage />,
-    // TODO add error boundary
+    errorElement: <ErrorPage />,
     children: [
       {
         path: '/',

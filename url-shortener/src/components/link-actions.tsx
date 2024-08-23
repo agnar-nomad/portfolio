@@ -5,6 +5,7 @@ import { downloadFile } from '@/lib/utils';
 import toast from "react-hot-toast";
 import EditLink from "./edit-link-action";
 import DeleteLink from "./delete-link-action";
+import { websiteDomain } from '@/lib/config';
 
 
 type LinkActionsProps = {
@@ -15,7 +16,8 @@ export default function LinkActions({ urlData }: LinkActionsProps) {
 
   const handleCopy = () => {
     try {
-      navigator?.clipboard.writeText(`https://trimmr.in/${urlData?.short_url}`);
+      const linkToGo = `${websiteDomain}/${urlData?.short_url}`
+      navigator?.clipboard.writeText(linkToGo);
       toast.success("Link URL copied.")
     } catch {
       toast.error("Failed to copy link URL to clipboard. Try again.")
@@ -44,8 +46,6 @@ export default function LinkActions({ urlData }: LinkActionsProps) {
       <EditLink urlData={urlData} />
 
       <DeleteLink urlId={urlData.id} />
-
-
     </div>
   )
 }

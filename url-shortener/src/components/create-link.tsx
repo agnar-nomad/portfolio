@@ -18,6 +18,7 @@ import { BeatLoader } from 'react-spinners';
 import { NewLinkSchema, NewLinkSchemaType } from '@/lib/schemas';
 import { useCreateNewUrl, useUser } from '@/hooks/api-hooks';
 import * as v from 'valibot';
+import { websiteShortcut } from '@/lib/config';
 
 type NewLinkSchema = typeof NewLinkSchema
 type FormErrorKey = v.IssueDotPath<NewLinkSchema>
@@ -135,7 +136,7 @@ export default function CreateLink() {
         />
         {formErrors?.longUrl && <InputError message={formErrors.longUrl} />}
         <span className="flex items-center gap-2">
-          <Card className="p-2">trimmr.in</Card> /
+          <Card className="p-2">{websiteShortcut}</Card> /
           <Input
             id="customUrl"
             placeholder="Custom link (optional)"
