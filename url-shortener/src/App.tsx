@@ -12,6 +12,8 @@ import { RouterProvider } from 'react-router-dom';
 import RequireAuth from './components/require-auth';
 import { Toaster } from 'react-hot-toast';
 import ErrorPage from './components/error-boundary';
+import ExampleLinkPage from './pages/example-link';
+import ExampleDashboardPage from './pages/example-dashboard';
 
 const router = createBrowserRouter([
   {
@@ -47,6 +49,14 @@ const router = createBrowserRouter([
       {
         path: '/:id',
         element: <RedirectLinkPage />,
+      },
+      {
+        path: '/example-dashboard',
+        element: <ExampleDashboardPage />,
+      },
+      {
+        path: '/example-link',
+        element: <ExampleLinkPage />,
       },
     ],
   },

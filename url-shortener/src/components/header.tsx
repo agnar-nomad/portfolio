@@ -31,7 +31,24 @@ export default function Header() {
         <Link to={'/'}>
           <img src="/logo.png" alt="Website logo" className="h-16" />
         </Link>
-        <div>
+        <div className='flex justify-between items-center gap-12'>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="font-semibold">
+              Examples
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>
+                <Link to="/example-dashboard">
+                  Example Dashboard
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link to="/example-link">
+                  Example Link Page
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           {!user ? (
             <Button onClick={handleClickLogin}>Login</Button>
           ) : (

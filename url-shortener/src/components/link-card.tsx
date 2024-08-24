@@ -16,7 +16,7 @@ export default function LinkCard({ url }: LinkCardProp) {
       <img
         src={url?.qr || ""}
         alt="QR code"
-        className="h-32 w-32 object-contain ring ring-blue-500 self-start"
+        className="h-32 w-32 object-contain ring self-start"
       />
       <Link to={`/link/${url?.id}`} className="flex flex-col flex-1">
         <h3 className="text-3xl font-extrabold hover:underline cursor-pointer">
