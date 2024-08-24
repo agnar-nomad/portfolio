@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -6,12 +7,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useUtilHelpers } from '@/hooks/helper-hooks';
 
 export default function LandingPage() {
   const [longUrl, setLongUrl] = useState<string>();
-  const navigate = useNavigate();
+  const { navigate } = useUtilHelpers();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setLongUrl(e.target.value);
 
@@ -37,17 +37,13 @@ export default function LandingPage() {
           value={longUrl}
           className="h-full flex-1 py-4 px-4"
         />
-        <Button className="h-full" type="submit" variant="destructive">
+        <Button className="h-full font-semibold" type="submit" variant="accent">
           Shorten
         </Button>
       </form>
-      <img src="/abstract-link.png" alt="Banner" className="w-full my-11 md:px-11 max-h-[700px] object-cover opacity-50" />
+      <img src="/abstract-link.png" alt="Banner" className="w-full my-12 md:px-12 max-h-[700px] object-cover opacity-50" />
 
-      <h2 className="my-6 sm:my-12 text-2xl sm:text-4xl lg:text-5xl text-white text-center font-bold">
-        Our links are different.
-      </h2>
-
-      <Accordion type="multiple" className="w-full md:px-11">
+      <Accordion type="multiple" className="w-full md:px-12">
         <AccordionItem value="item-1">
           <AccordionTrigger>How does the URL Shortener work?</AccordionTrigger>
           <AccordionContent>
@@ -91,6 +87,14 @@ export default function LandingPage() {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
+      <div className="my-8 w-full pl-12 opacity-75">
+        <p>Go ahead and create a new short link, and a user profile in the process.</p>
+        <p>
+          Or to simply explore, you can use the demo account.
+          User: <strong>user@example.com</strong>, Password: <strong>user1234</strong>
+        </p>
+        <p>Or only see the example demo pages without any accounts.</p>
+      </div>
     </section>
   );
 }
