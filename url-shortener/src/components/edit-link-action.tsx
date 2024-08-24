@@ -87,8 +87,8 @@ export default function EditLink({ urlData }: EditLinkProps) {
 
 
   return (
-    <Dialog open={modalOpen} >
-      <DialogTrigger asChild >
+    <Dialog open={modalOpen}>
+      <DialogTrigger asChild>
         <Button variant="ghost" onClick={() => setModalOpen(true)}>
           <Edit />
         </Button>

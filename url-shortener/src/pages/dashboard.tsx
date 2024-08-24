@@ -73,8 +73,10 @@ export default function DashboardPage() {
         />
         <Filter className="absolute top-2 right-2 p-1" />
       </section>
+
       {urlsError && <InputError message={urlsError?.message} />}
       {clicksError && <InputError message={clicksError?.message} />}
+
       <section className="space-y-4">
         {(filteredUrls || []).map((url) => (
           <LinkCard key={url.id} url={url} />

@@ -11,6 +11,7 @@ type LinkCardProp = {
 export default function LinkCard({ url }: LinkCardProp) {
 
   const fancyLinkToShow = `https://${websiteShortcut}/${url?.custom_url ? url.custom_url : url.short_url}`
+
   return (
     <article className="flex flex-col md:flex-row gap-5 border p-4 rounded-lg">
       <img

@@ -25,9 +25,9 @@ export default function LinkActions({ urlData }: LinkActionsProps) {
   };
 
   const handleDownload = () => {
-    const imageUrl = urlData?.qr || "";
+    const imageUrl = urlData?.qr || null;
     const fileName = urlData?.title || "file";
-    if (imageUrl && fileName) {
+    if (imageUrl) {
       downloadFile(imageUrl, fileName)
     } else {
       toast.error("There is something wrong with the file. Refresh page and try again.")

@@ -66,7 +66,7 @@ export default function Header() {
                 <DropdownMenuLabel>
                   {user?.user_metadata?.name || 'My Account'}
                 </DropdownMenuLabel>
-                <DropdownMenuSeparator />
+                <DropdownMenuSeparator className='bg-gray-300' />
                 <DropdownMenuItem>
                   <Link to="/dashboard" className="flex">
                     <LinkIcon className="mr-2 h-4 w-4" />
