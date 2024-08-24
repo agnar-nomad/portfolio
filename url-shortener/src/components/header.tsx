@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
-import { useNavigate } from 'react-router-dom';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,9 +13,10 @@ import { LogOut } from 'lucide-react';
 import { LinkIcon } from 'lucide-react';
 import { useLogoutUser, useUser } from '@/hooks/api-hooks';
 import ProgressIndicator from './progress-indicator';
+import { useUtilHelpers } from '@/hooks/helper-hooks';
 
 export default function Header() {
-  const navigate = useNavigate();
+  const { navigate } = useUtilHelpers();
   const { user } = useUser();
 
   const { isPending: logoutLoading, mutate: logoutMutation } = useLogoutUser()

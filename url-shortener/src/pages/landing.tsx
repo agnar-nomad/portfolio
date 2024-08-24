@@ -41,7 +41,11 @@ export default function LandingPage() {
           Shorten
         </Button>
       </form>
-      <img src="/banner.jpeg" alt="Banner" className="w-full my-11 md:px-11" />
+      <img src="/abstract-link.png" alt="Banner" className="w-full my-11 md:px-11 max-h-[700px] object-cover opacity-50" />
+
+      <h2 className="my-6 sm:my-12 text-2xl sm:text-4xl lg:text-5xl text-white text-center font-bold">
+        Our links are different.
+      </h2>
 
       <Accordion type="multiple" className="w-full md:px-11">
         <AccordionItem value="item-1">
@@ -78,7 +82,6 @@ export default function LandingPage() {
                 <li>The number of clicks the short URL has received</li>
                 <li>The geographic locations of the users clicking the link</li>
                 <li>The platforms that generated the clicks</li>
-                <li>The time and date of each click</li>
               </ul>
               <p>
                 This information helps you understand how and where your links

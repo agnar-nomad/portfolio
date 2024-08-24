@@ -7,14 +7,10 @@ export default function AppLayout() {
       <header>
         <Header />
       </header>
-      <main className="min-h-screen">
+      <main className="min-h-screen mb-16">
         {/* Body */}
         <Outlet />
       </main>
-
-      <footer className="p-10 text-center bg-gray-800 mt-10">
-        Made with LOVE by Author
-      </footer>
     </div>
   );
 }

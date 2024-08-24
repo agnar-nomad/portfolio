@@ -3,9 +3,7 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 
-// TODO rebrand and change images
-// TODO finish TODOs
-// TODO add demo data and show demo account info on HOmepage
+// TODO add demo data and show demo account info on HOmepage + example pages with static data
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
