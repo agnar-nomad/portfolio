@@ -1,50 +1,30 @@
-# React + TypeScript + Vite
+# Tweedder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+A Twitter/X clone based on a youtube video published by the channel [Web Dev Simplified](https://www.youtube.com/@WebDevSimplified/videos).
 
-Currently, two official plugins are available:
+## Technologies
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Next.js](https://nextjs.org)
+- [NextAuth.js](https://next-auth.js.org) + via Discord for easy setup
+- [Prisma](https://prisma.io)
+- [Tailwind CSS](https://tailwindcss.com)
+- [tRPC](https://trpc.io)
 
-## Expanding the ESLint configuration
+I also used [Supabase](https://supabase.com) for a cloud DB, which is created on a free tier account.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Features
 
-- Configure the top-level `parserOptions` property like this:
+- Create new tweets
+- Like own and other users' tweets
+- Follow users
+- View recent tweets
+- View tweets by users you follow
+- View own tweets through own profile page
+- View own and other users profile page
+- Infinite scrolling and real time updates
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Demo
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+You can view the app on the following URL: [https://tweedder.vercel.app](https://tweedder.vercel.app)
+Log in using a Discord account and create tweets, view feeds, like posts, follow users
