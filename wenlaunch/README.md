@@ -1,6 +1,6 @@
 # Wenlaunch Web3 calendar
 
-This is a Next.js ver 13 app using the `/app` directory.
+This is a Next.js ver 14 app using the `/app` directory.
 It is an event calendar app, where users can submit, read and browse upcoming web3 events and releases.
 Attached to it are a few Discord bots, that are able to submit themselves, but they also monitor user submissions and then propagate those on our Discord server.
 
