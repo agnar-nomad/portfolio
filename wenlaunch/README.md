@@ -27,4 +27,4 @@ I used Strapi as an OSS solution for a CMS backend written in JS.
 
 ## Demo
 
-You can view the app on the following URL: [https://wenlaunch-demo.netlify.app](https://wenlaunch-demo.netlify.app)
+You can view the app on the following URL: [https://wenlaunch-demo.vercel.app](https://wenlaunch-demo.vercel.app)

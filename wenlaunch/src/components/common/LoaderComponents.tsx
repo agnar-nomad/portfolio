@@ -50,7 +50,7 @@ export function ProjectListLoader() {
 }
 
 
-function SkeletonProjectCard() {
+export function SkeletonProjectCard() {
   return (
     <article className={`card card-compact h-[500] w-80 bg-base-100 text-base-content border-2 border-secondary`}>
       <section className="card-header relative flex gap-4 px-4 py-2">

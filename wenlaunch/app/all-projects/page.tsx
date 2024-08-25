@@ -9,7 +9,8 @@ import Divider from "@/src/components/common/Divider";
 import Pagination from "@/src/components/common/Pagination";
 import FiltersArea, { FilterFields } from "@/src/components/all-projects/FiltersArea";
 import { useCreateQueryString } from "@/src/lib/hooks";
-import ProjectCard, { SkeletonProjectCard, SkeletonProjectCard2 } from "@/src/components/homepage/ProjectCard";
+import ProjectCard from "@/src/components/homepage/ProjectCard";
+import { SkeletonProjectCard } from "@/src/components/common/LoaderComponents";
 import { TbFaceIdError } from "react-icons/tb";
 import { fetchOptions } from "@/src/lib/fetchers";
 
