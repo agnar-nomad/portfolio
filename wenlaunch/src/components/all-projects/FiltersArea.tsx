@@ -48,9 +48,7 @@ export default function FiltersArea({ loading, onSubmit, className }: Props) {
   const titleParamRef = useRef<HTMLInputElement>(null)
 
   const networksParams = useMemo(() => searchParams.getAll(FilterFields.NETWORK), [searchParams])
-  // console.log('line 52: networksParams', networksParams)
   const categoriesParams = useMemo(() => searchParams.getAll(FilterFields.CATEGORY), [searchParams])
-  // console.log('line 52: categoriesParams', categoriesParams)
 
   const createQueryString = useCreateQueryString()
 

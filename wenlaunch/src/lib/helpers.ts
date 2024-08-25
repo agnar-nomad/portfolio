@@ -95,7 +95,6 @@ export const allowedImageMIMETypes = [
 
 export function checkImageFileType(file: File | 'undef') {
   if (file === 'undef') return true;
-  // the above is only due to zod's behaviour or me not understanding zod in this case
   if (file?.type) {
     return allowedImageMIMETypes.includes(file.type);
   }

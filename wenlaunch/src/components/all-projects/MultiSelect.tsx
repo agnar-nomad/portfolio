@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react'
+import { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { FaChevronDown, FaCheck } from "react-icons/fa6";
 
@@ -27,8 +27,6 @@ export default function MultiSelect({
   placeholder = "Select some options"
 }: MultiSelectProps) {
 
-  // const [selected, setSelected] = useState<Option[]>(selectedOptions ?? [])
-
   const handleChange = (values: Option[]) => {
     console.log('line 47: MultiSelect onChange', values)
     onChange(values)
@@ -47,7 +45,7 @@ export default function MultiSelect({
           multiple
           by={"value"}
         >
-          <Listbox.Label className="hidden" aria-hidden="false">{label ?? 'A Select input field'}</Listbox.Label>
+          <Listbox.Label className="sr-only" aria-hidden="false">{label ?? 'A Select input field'}</Listbox.Label>
 
           <Listbox.Button
             className='relative w-full h-full px-4 bg-inherit text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-1 sm:text-sm flex items-center gap-2 justify-between'

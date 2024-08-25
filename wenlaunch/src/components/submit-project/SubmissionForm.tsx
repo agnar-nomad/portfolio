@@ -1,7 +1,6 @@
 import React from 'react'
 import { SubmitHandler, useForm, useFieldArray } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-// import { VscDiffRemoved, VscDiffAdded } from 'react-icons/vsc'
 import { FormSchemaType, FormSchema } from '@/src/models/SubmitFormData'
 import ErrorMessage from '@/src/components/common/ErrorMessage';
 import InputField from '@/src/components/submit-project/InputField';
@@ -25,17 +24,14 @@ export default function ProjectSubmissionForm() {
       shouldFocusError: false,
       mode: "onBlur",
       delayError: 300
-
     }
   )
 
-  const { fields: marketPlaceFields, append, remove } = useFieldArray({
+  const { fields: marketPlaceFields } = useFieldArray({
     name: 'marketplace_links',
     control,
     shouldUnregister: true
   })
-
-  const addNewEntry = () => append({ name: '', url: '' }, { shouldFocus: true })
 
   const categoryWatch = watch('categories');
   const tokenCategoryIsSelected = categoryWatch?.includes(TOKEN_CATEGORY_ID);
@@ -44,10 +40,8 @@ export default function ProjectSubmissionForm() {
     if (userLoaded && userSignedIn) {
       data.source = "wenlaunch-app-user-" + user.username;
     }
-    console.log('Modded Data', data)
 
     const formData = buildSubmissionFormData(data)
-    console.log('formData', formData)
 
     try {
       const res = await submitNewProject(formData)
@@ -244,7 +238,6 @@ export default function ProjectSubmissionForm() {
 
       <div className="form-control w-full col-span-full">
         <InputField label='Marketplace or DEX links' fieldName='marketplace_links'
-          // hint="Links to secondary sales marketplaces. Provide as many as you like using the + button"
           hint={formFieldHints.marketplaceLinks} errors={errors} >
           {marketPlaceFields.map((item, index) => (
             <div key={item.id} >
@@ -259,12 +252,6 @@ export default function ProjectSubmissionForm() {
                   <input type="text" {...register(`marketplace_links.${index}.url` as const)}
                     className='input input-bordered' />
                 </div>
-                {/* <div className='self-end'>
-                    <button className='btn btn-sm btn-ghost btn-square -translate-y-2 -translate-x-3 no-animation animate-none' onClick={() => append({ name: '', url: '' })}> <VscDiffAdded size={17} /></button>
-                    {index > 0 ?
-                      <button className='btn btn-sm btn-ghost btn-square -translate-y-2 -translate-x-3 no-animation animate-none' onClick={() => remove(index)}><VscDiffRemoved size={17} /> </button> : null}
-                  </div> */}
-                {/* BUG  */}
               </div>
               {errors["marketplace_links"]?.[index] ?
                 <ErrorMessage>{

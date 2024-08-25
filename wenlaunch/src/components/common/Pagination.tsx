@@ -5,14 +5,12 @@ interface Props {
   lastPage?: number
   currentPage?: number
   onClick: (page: string) => void
-  className?: string
 }
 
 export default function Pagination({
   lastPage = 2,
   currentPage = 1,
   onClick,
-  className
 }: Props) {
 
 
@@ -22,13 +20,15 @@ export default function Pagination({
 
   return (
     <>
-      <div className={`join ${className ?? ''}`}>
-        {pages.map((page, i) => (
-          <button key={page}
-            className={`join-item flex-1 btn btn-square ${page === currentPage ? 'btn-active' : ''}`}
-            onClick={clickHandler(page.toString())}
-          >{page}</button>
-        ))}
+      <div className="max-w-sm overflow-auto">
+        <div className={`join`}>
+          {pages.map((page, i) => (
+            <button key={page}
+              className={`join-item flex-1 btn btn-square ${page === currentPage ? 'btn-active' : ''}`}
+              onClick={clickHandler(page.toString())}
+            >{page}</button>
+          ))}
+        </div>
       </div>
     </>
   )

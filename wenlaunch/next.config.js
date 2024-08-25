@@ -3,9 +3,7 @@
 const { withAxiom } = require('next-axiom');
 
 const nextConfig = {
-  experimental: {
-    // typedRoutes: true,
-  },
+  experimental: {},
   images: {
     remotePatterns: [
       {

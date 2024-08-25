@@ -21,7 +21,7 @@ export default async function ProjectDetail({ params }: ParamsType) {
   const projectData = await fetchProjectPageData(slug)
 
   // Pick up the needed fields
-  const { project_launch_datetime, title, description, project_rating, token_supply, project_mint_price, categories, networks, project_extra_info, blockchain_domain_name, project_contract_address, project_logo, project_website_url, project_launch_datetime_string } = projectData
+  const { project_launch_datetime, title, description, token_supply, project_mint_price, categories, networks, project_extra_info, blockchain_domain_name, project_contract_address, project_logo, project_website_url, project_launch_datetime_string } = projectData
 
   // format launch date
   const releaseDate = project_launch_datetime_string ? formatReleaseDate(project_launch_datetime_string) : project_launch_datetime ? formatReleaseDate(project_launch_datetime) : ""
@@ -44,8 +44,9 @@ export default async function ProjectDetail({ params }: ParamsType) {
 
           {releaseDate &&
             <p className='text-base'>Launch date: <br />
-              <span className="whitespace-nowrap font-semibold text-lg pl-4">{releaseDate.date}&nbsp;</span>
-              <span className="whitespace-nowrap font-semibold text-lg">{releaseDate.time}</span>
+              <span className="whitespace-nowrap font-semibold text-lg pl-4">
+                {releaseDate.date}&nbsp;{releaseDate.time}
+              </span>
             </p>
           }
 
@@ -91,7 +92,8 @@ export default async function ProjectDetail({ params }: ParamsType) {
         <Tab title="Extra info" >
           {project_extra_info ?
             <Markdown>{project_extra_info}</Markdown>
-            : 'Not Available'}
+            : 'Not Available'
+          }
         </Tab>
         <Tab title={
           <span className='flex items-center gap-2'>
@@ -108,15 +110,7 @@ export default async function ProjectDetail({ params }: ParamsType) {
             }
           </>
         </Tab>
-        {/* <Tab title="Twitter Feed">Twitter Feed</Tab> */}
       </Tabs>
     </main >
   );
-}
-
-
-const EmptyCell = () => {
-  return (
-    <div className="hidden md:block"></div>
-  )
 }

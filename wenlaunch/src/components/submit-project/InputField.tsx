@@ -1,8 +1,6 @@
 import React from 'react'
 import { FormSchemaType } from '@/src/models/SubmitFormData'
-
-import { useForm, FieldErrors } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { FieldErrors } from 'react-hook-form'
 import ErrorMessage from '../common/ErrorMessage'
 import PopupHint from '../common/PopupHint'
 
@@ -34,7 +32,6 @@ export default function InputField(
   }: InputProps) {
 
   const isError = errors[fieldName]
-
 
   return (
     <>

@@ -14,19 +14,6 @@ import { TbFaceIdError } from "react-icons/tb";
 import { fetchOptions } from "@/src/lib/fetchers";
 
 
-// for RSC
-// type SearchParamsType = {
-//   [key: string]: string | string[] | undefined
-// }
-
-// interface Props {
-//   searchParams: SearchParamsType
-// }
-// export default function AllProjectsPage({ searchParams }: Props) {
-
-
-
-// for client components
 export default function AllProjectsPage() {
 
   const router = useRouter()
@@ -136,7 +123,6 @@ export default function AllProjectsPage() {
 
         <div className="flex flex-wrap gap-8 justify-center">
           {loading ?
-            // <div className="loading loading-ring loading-lg mx-auto"></div>
             <LoadingPlaceholders />
             :
             <>
@@ -153,7 +139,11 @@ export default function AllProjectsPage() {
         </div>
 
         <div className="px-2 md:px-6 lg:px-12 text-right">
-          <Pagination onClick={onPaginationClick} currentPage={paginationPage} lastPage={pagination?.pageCount} />
+          <Pagination
+            onClick={onPaginationClick}
+            currentPage={paginationPage}
+            lastPage={pagination?.pageCount}
+          />
         </div>
 
       </section>
