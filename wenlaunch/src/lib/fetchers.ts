@@ -28,9 +28,11 @@ export const fetchOptions = {
 };
 
 export async function fetchHomePageData(): Promise<Project[]> {
-  // TODO
-  const yesterday = dayjs().subtract(1, 'days');
-  const lastNightStr = yesterday.utc().hour(21).startOf('hour').toISOString(); // yesterday at 9pm UTC
+  // const yesterday = dayjs().subtract(1, 'days');
+  // const lastNightStr = yesterday.utc().hour(21).startOf('hour').toISOString(); // yesterday at 9pm UTC
+
+  // fixed date for demo purposes
+  const lastNightStr = dayjs('2024-03-12').utc().toISOString();
 
   const filterFromDate = `filters[project_launch_datetime][$gte]=${lastNightStr}`;
   const filterToDate = `filters[project_launch_datetime][$lte]=2045-01-01T00:00:00Z`; // some future
