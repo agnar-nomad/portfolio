@@ -1,11 +1,9 @@
-// TODO redirect from "super-secret-page" to this page, for fun
-
 import { fetchLatestSubmissionData } from "@/src/lib/fetchers";
 import { formatReleaseDate } from "@/src/lib/helpers";
 import { Project } from "@/src/models/ApiModels";
 import { BsCheck2Square } from "react-icons/bs";
 import { ImCross } from "react-icons/im";
-import DetailsButton from "../../src/components/latest-submissions/DetailsModal";
+import DetailsButton from "@/src/components/latest-submissions/DetailsModal";
 import Divider from "@/src/components/common/Divider";
 
 

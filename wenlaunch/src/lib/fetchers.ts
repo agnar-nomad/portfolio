@@ -110,11 +110,10 @@ export async function fetchChangelogPageData() {
 }
 
 export async function fetchLatestSubmissionData() {
-  // TODO
+  // a specific date
+  const cutoffDay = dayjs('2024-07-17').utc().toISOString();
 
-  const tenDaysAgo = dayjs().subtract(10, 'days').utc().toISOString();
-
-  const filterFromDate = `filters[createdAt][$gte]=${tenDaysAgo}`;
+  const filterFromDate = `filters[createdAt][$gte]=${cutoffDay}`;
   const sortBy = `sort=createdAt:desc`;
   const paginationOpt = `pagination[page]=1&pagination[pageSize]=${50}`;
   const queryString = `projects?${filterFromDate}&${sortBy}&${paginationOpt}&publicationState=preview&populate=*`;
@@ -122,7 +121,6 @@ export async function fetchLatestSubmissionData() {
   try {
     const res = await fetch(`${BACKEND_URL}/${queryString}`, {
       ...fetchOptions,
-      // next: { revalidate: FIVE_MINUTES },
       cache: 'no-store',
     });
 
