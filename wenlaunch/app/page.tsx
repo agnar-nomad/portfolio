@@ -4,8 +4,6 @@ import Divider from '@/src/components/common/Divider';
 import ProjectList from '@/src/components/homepage/ProjectList';
 import { BannerLoader, ProjectListLoader } from '@/src/components/common/LoaderComponents';
 
-// TODO fix Markdown compoenent and sanitization rules for &apos;
-
 export default async function HomePage() {
 
   return (

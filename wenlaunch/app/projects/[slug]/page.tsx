@@ -61,14 +61,9 @@ export default async function ProjectDetail({ params }: ParamsType) {
         <p className='font-semibold'>{description}</p>
       </section>
 
-      {/* <EmptyCell /> */}
-
       <LinksArea project={projectData} className='grid md:hidden' />
 
-      {/* <EmptyCell /> */}
-
       <Tabs tabStyle='boxed' className='col-start-1 col-end-1 shadow-sm shadow-primary/60' headerClassname='bg-base-100 p-0 shadow-sm shadow-primary/30'
-        // interesting approach by using the prose tailwind plugin
         contentClassname='prose prose-a:no-underline prose-p:leading-relaxed prose-ul:mt-2 prose-ul:mb-2 prose-ol:mt-2 prose-ol:mb-2'>
         <Tab title="Details">
           <>
@@ -94,9 +89,9 @@ export default async function ProjectDetail({ params }: ParamsType) {
           </>
         </Tab>
         <Tab title="Extra info" >
-          {/* // TODO work out the single quotes issue, maybe the other sanitizer*/}
-          {/* {project_extra_info ? <Markdown content={project_extra_info} /> : 'Not Available'} */}
-          Currently not available. We are working on improvements.
+          {project_extra_info ?
+            <Markdown>{project_extra_info}</Markdown>
+            : 'Not Available'}
         </Tab>
         <Tab title={
           <span className='flex items-center gap-2'>

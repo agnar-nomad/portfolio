@@ -2,24 +2,22 @@
 
 import React from 'react'
 import '@/src/css/markdown.css'
-import MarkdownToJSX from 'markdown-to-jsx';
-// import * as MD2JSX from 'markdown-to-jsx'
-import { compiler } from 'markdown-to-jsx';
-import { renderToString } from 'react-dom/server'
+import Markdown2JSX from 'markdown-to-jsx';
+import { MarkdownToJSX } from 'markdown-to-jsx';
 
 
 interface Props {
-  content?: string;
+  children: string;
   className?: string
 }
 
-export default function Markdown({ content, className }: Props) {
+export default function Markdown({ children, className }: Props) {
 
-  if (!content) { return null }
+  if (!children) { return null }
 
-  // type MDOptions = MD2JSX.Options;
+  type MDOptions = MarkdownToJSX.Options;
 
-  const markdownCompilerOptions = {
+  const markdownCompilerOptions: MDOptions = {
     forceWrapper: true,
     wrapper: React.Fragment,
     namedCodesToUnicode: {
@@ -27,11 +25,12 @@ export default function Markdown({ content, className }: Props) {
       '#x27': '\u0027',
       '&#x27;': '\u0027',
     },
+    forceBlock: true,
     overrides: {}
   }
 
-  const compiledMarkdown = compiler(content, markdownCompilerOptions)
-  const compiledMarkdownToString = renderToString(compiledMarkdown)
+  // const compiledMarkdown = compiler(children, markdownCompilerOptions)
+  // const compiledMarkdownToString = renderToStaticMarkup(compiledMarkdown)
   // console.log('line 30: ', compiled, typeof compiled, compiledMarkdownToString, typeof compiledMarkdownToString)
 
   const sanitisationOptions = {
@@ -48,9 +47,9 @@ export default function Markdown({ content, className }: Props) {
   return (
     <>
       <div className={`markdown prose prose-a:no-underline prose-p:leading-relaxed prose-p:mt-2 prose-p:mb-2 prose-ul:mt-2 prose-ul:mb-2 prose-ol:mt-2 prose-ol:mb-2 ${className}`}>
-        <MarkdownToJSX options={markdownCompilerOptions}>
-          {compiledMarkdownToString}
-        </MarkdownToJSX>
+        <Markdown2JSX options={markdownCompilerOptions}>
+          {children}
+        </Markdown2JSX>
       </div>
     </>
   )

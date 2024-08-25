@@ -131,6 +131,9 @@ export const projectSubmissionDefaults = {
   ],
 };
 
+export const NFT_CATEGORY_ID = '1';
+export const TOKEN_CATEGORY_ID = '4';
+
 export const formFieldHints = {
   dateTime:
     'Our app works with times in the UTC timezone and 24h format. In case of trouble, use a tool like savvytime.com/converter/utc ',
