@@ -73,8 +73,3 @@ export default function ProfileImage({
 const loaderProp = ({ src, width }: ImageLoaderProps) => {
   return `${src}?w=${width}`;
 }
-
-// In production, images from IPFS could not be loaded, because the Next-modified/optimised IPFS links were unusable. So those images will have a custom loader
-
- // https://stackoverflow.com/questions/70457750/nextjs-not-fetching-images-using-image-url-after-deploying-on-production-server
-  // https://stackforgeeks.com/blog/what-is-the-best-way-to-have-a-fallback-image-in-nextjs

@@ -7,7 +7,6 @@ import SecurityBadgeCollection from '../common/SecurityBadgeCollection';
 import SocialsLogosCollection from '../common/SocialsLogosCollection';
 import NetworkBadges from '../common/NetworkBadges';
 import CategoryBadges from '../common/CategoryBadges';
-import Skeleton from '../common/Skeleton';
 
 interface ProjectCardProps {
   project: Project;

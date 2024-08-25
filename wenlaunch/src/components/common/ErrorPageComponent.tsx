@@ -40,8 +40,3 @@ export default function ErrorPageComponent({ error, reset }: ErrorPageProps) {
     </div>
   )
 }
-
-
-
-
-{/* <a href="https://storyset.com/people">People illustrations by Storyset</a> */ }

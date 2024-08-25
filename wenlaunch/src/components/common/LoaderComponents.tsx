@@ -1,7 +1,3 @@
-import { SkeletonProjectCard2 } from "../homepage/ProjectCard"
-
-
-
 
 export function BannerLoader() {
 
@@ -43,12 +39,51 @@ export function ProjectListLoader() {
 
   return (
     <>
-      <SkeletonProjectCard2 />
-      <SkeletonProjectCard2 />
-      <SkeletonProjectCard2 />
-      <SkeletonProjectCard2 />
-      <SkeletonProjectCard2 />
-      <SkeletonProjectCard2 />
+      <SkeletonProjectCard />
+      <SkeletonProjectCard />
+      <SkeletonProjectCard />
+      <SkeletonProjectCard />
+      <SkeletonProjectCard />
+      <SkeletonProjectCard />
     </>
+  )
+}
+
+
+function SkeletonProjectCard() {
+  return (
+    <article className={`card card-compact h-[500] w-80 bg-base-100 text-base-content border-2 border-secondary`}>
+      <section className="card-header relative flex gap-4 px-4 py-2">
+        <div className="avatar">
+          <div className="skeleton mask mask-squircle w-24"></div>
+        </div>
+
+        <div className='grid mt-4'>
+          <div className="skeleton text-2xl leading-6 pb-1 pt-2 w-40 h-8"></div>
+          <div className='skeleton h-4 w-44' />
+        </div>
+      </section>
+
+      <section className="card-body">
+        <div className='skeleton h-6' />
+        <div className='skeleton my-1 h-24 text-base'></div>
+        <div className='grid grid-flow-col-dense gap-4 text-base'>
+          <div className='skeleton h-4 w-1/2'></div>
+          <div className='skeleton h-4 w-1/2'></div>
+        </div>
+
+        <div className='skeleton h-8' />
+
+        <div className="grid gap-2">
+          <div className='skeleton h-4 w-56' />
+          <div className='skeleton h-4 w-32' />
+        </div>
+      </section>
+
+      <section className="card-footer flex items-center justify-end gap-4 p-4">
+        <div className='skeleton btn w-28' />
+        <div className='skeleton btn w-28' />
+      </section>
+    </article>
   )
 }

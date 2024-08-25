@@ -53,7 +53,6 @@ export async function fetchBannerData(): Promise<Project[]> {
     {
       ...fetchOptions,
       cache: 'no-store',
-      // next: { revalidate: SIXTY_SECONDS }
     }
   );
   const { data }: HomePageDataResponse = await res.json();
@@ -66,7 +65,6 @@ export async function fetchProjectPageData(slug: string): Promise<Project> {
     `${BACKEND_URL}/slugify/slugs/project/${slug}?populate=*`,
     {
       ...fetchOptions,
-      // next: {revalidate: FIVE_MINUTES}
       cache: 'no-store',
     }
   );

@@ -18,16 +18,6 @@ export default function SecurityBadgeCollection({ project, showFalseAlso = false
 
   const { project_doxx, project_verified, project_multisig } = project
 
-  // const shouldShowBadge = useCallback(
-  //   (property: boolean | undefined | null) => {
-  //     if (showFalseAlso) {
-  //       return property !== undefined
-  //     }
-  //     return property === true && property !== undefined
-  //   },
-  //   [showFalseAlso],
-  // )
-
   const shouldShowBadge = (property: boolean | undefined | null) => {
     if (showFalseAlso) {
       return property !== undefined
