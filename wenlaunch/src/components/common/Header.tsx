@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 import { LIGHT_THEME } from '@/config';
-import { useTheme } from './ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 import WenlaunchLogo from '/public/wl__full--light.svg';
 import WenlaunchLogoDark from '/public/wl__full--dark.svg'
 import Image from 'next/image';

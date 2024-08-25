@@ -30,6 +30,18 @@ export default function Footer() {
             Privacy policy
           </a>
         </p>
+        <p>
+          <a className='hover:text-[#41e607] hover:no-underline'
+            href={"/latest-submissions"}>
+            Latest Submissions
+          </a>
+        </p>
+        <p>
+          <a className='hover:text-[#41e607] hover:no-underline'
+            href={"/changelogs"}>
+            Change Log
+          </a>
+        </p>
       </div>
     </footer>
   </>

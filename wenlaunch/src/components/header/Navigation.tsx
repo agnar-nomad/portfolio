@@ -8,7 +8,7 @@ const CommonNavItems = () => {
     <a className="hidden sm:inline" key={'socials'} href={'#footer'}>Contact Us</a>
     <Link key={'Submit'} href={'/submit-project'}>Submit</Link>
     <Link key={'AllProjects'} href={'/all-projects'}>All Projects</Link>
-    <Link key={'AlphaCalls'} href={'/alpha-calls'}>Alpha</Link>
+    {/* <Link key={'AlphaCalls'} href={'/alpha-calls'}>Alpha</Link> */}
   </>)
 }
 

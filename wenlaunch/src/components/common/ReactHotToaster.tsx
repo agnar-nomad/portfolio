@@ -1,7 +1,7 @@
 'use client'
 
 import { Toaster } from "react-hot-toast";
-import { useTheme } from "./ThemeContext";
+import { useTheme } from "../../context/ThemeContext";
 
 export default function ReactHotToaster() {
 

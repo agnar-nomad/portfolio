@@ -6,7 +6,7 @@ import Image from "next/image"
 import { usePathname } from 'next/navigation'
 import { useEffect } from "react"
 import * as Sentry from '@sentry/nextjs'
-import { useTheme } from './ThemeContext'
+import { useTheme } from '../../context/ThemeContext'
 
 
 export default function ErrorPageComponent({ error, reset }: ErrorPageProps) {

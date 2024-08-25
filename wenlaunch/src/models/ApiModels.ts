@@ -57,11 +57,11 @@ export interface Category {
 
 export interface ApiMetadata {
   pagination: {
-    page: number,
-    pageSize: number,
-    pageCount: number,
-    total: number
-  }
+    page: number;
+    pageSize: number;
+    pageCount: number;
+    total: number;
+  };
 }
 
 export interface ProjectLogo {
@@ -90,7 +90,7 @@ export interface ProjectLogo {
 
 interface Marketplace {
   name: string;
-  url: string
+  url: string;
 }
 
 export interface Changelog {
@@ -102,33 +102,4 @@ export interface Changelog {
   createdAt: string;
   updatedAt: string;
   publishedAt?: string;
-}
-
-export interface AlphaCall {
-  id: number;
-  slug: string;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt?: string | null;
-  title: string;
-  project_twitter_url: string;
-  bullish_case: string;
-  pre_launch_call: boolean;
-  caller_twitter_tag: string;
-  project_launch_datetime?: string;
-  project_website_url?: string;
-  project_mint_price?: string;
-  token_supply?: string;
-  project_telegram_url?: string;
-  project_contract_address?: string;
-  project_mint_link?: string;
-  project_logo?: ProjectLogo;
-  project_logo_external_link?: string;
-  networks: Network[];
-  categories: Category[];
-  source?: string;
-  ticker_symbol?: string;
-  liquidity_pool_address?: string;
-  trading_chart_link?: string;
-  caller_tip_address?: string;
 }

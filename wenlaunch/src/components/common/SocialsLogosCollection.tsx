@@ -1,9 +1,9 @@
 import React from 'react'
 import SocialsLogo from './SocialsLogo'
-import { AlphaCall, Project } from '@/src/models/ApiModels'
+import { Project } from '@/src/models/ApiModels'
 
 interface Props {
-  project: Project | AlphaCall
+  project: Project
   className?: string
   logoSize?: string | number
 }

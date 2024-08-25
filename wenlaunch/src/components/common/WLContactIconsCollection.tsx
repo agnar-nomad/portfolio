@@ -17,9 +17,9 @@ export default function ContactWLIconsCollection({ className, size }: { classNam
       <Link href={"https://discord.gg/ayFNfpRaN9"} target='_blank' referrerPolicy='no-referrer'>
         <FaDiscord size={socialIconSize} color={''} className={socialsClassNames} />
       </Link>
-      <Link href={"mailto:team@wenlaunch.info"} target='_blank' referrerPolicy='no-referrer'>
+      {/* <Link href={"mailto:team@wenlaunch.info"} target='_blank' referrerPolicy='no-referrer'>
         <FaEnvelope size={socialIconSize} color={''} className={socialsClassNames} />
-      </Link>
+      </Link> */}
       <Link href={"https://wenlaunch.notion.site/wenlaunch/Wenlaunch-Wiki-00dfd1b9f64a4a3fb0e435ebda8a25fc"} target='_blank' referrerPolicy='no-referrer'>
         <SiNotion size={socialIconSize} color={''} className={socialsClassNames} />
       </Link>
@@ -32,9 +32,9 @@ export default function ContactWLIconsCollection({ className, size }: { classNam
       <Link href={"https://www.youtube.com/watch?v=VJW53_smtkU"} target='_blank' referrerPolicy='no-referrer'>
         <FaYoutube size={socialIconSize} color={''} className={socialsClassNames} />
       </Link>
-      <Link href={"https://wenlaunch.avax.sh/"} target='_blank' referrerPolicy='no-referrer'>
+      {/* <Link href={"https://wenlaunch.avax.sh/"} target='_blank' referrerPolicy='no-referrer'>
         <AavyDomainsLogo size={socialIconSize} color={''} className={socialsClassNames} />
-      </Link>
+      </Link> */}
     </div>
   )
 }

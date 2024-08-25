@@ -2,7 +2,7 @@
 import React from 'react'
 import { useRef } from 'react'
 import { DARK_THEME, LIGHT_THEME } from '@/config'
-import { useTheme } from '../common/ThemeContext'
+import { useTheme } from '../../context/ThemeContext'
 
 
 const ThemeChanger = (): JSX.Element => {

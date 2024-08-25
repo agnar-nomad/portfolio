@@ -36,31 +36,21 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'pfp.jpgstoreapis.com',
+      },
+      {
+        protocol: 'https',
         hostname: 'assets.coingecko.com',
       },
     ],
   },
-  async redirects() {
-    return [
-      {
-        source: '/api-docs',
-        destination: 'https://agnar.stoplight.io/docs/wenlaunch/project-api',
-        permanent: true
-      },
-      {
-        source: '/super-secret-submitter-page',
-        destination: '/latest-submissions',
-        permanent: true
-      },
-    ]
-  }
 };
 
 module.exports = withAxiom(nextConfig);
 
 // Injected content via Sentry wizard below
 
-const { withSentryConfig } = require("@sentry/nextjs");
+const { withSentryConfig } = require('@sentry/nextjs');
 
 module.exports = withSentryConfig(
   module.exports,
@@ -70,11 +60,10 @@ module.exports = withSentryConfig(
 
     // Suppresses source map uploading logs during build
     silent: true,
-    org: "wenlaunch",
-    project: "wenlaunch-nextjs",
+    org: 'wenlaunch',
+    project: 'wenlaunch-nextjs',
     // An auth token is required for uploading source maps.
     authToken: process.env.SENTRY_AUTH_TOKEN,
-
   },
   {
     // For all available options, see:
@@ -87,7 +76,7 @@ module.exports = withSentryConfig(
     transpileClientSDK: false,
 
     // Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
-    tunnelRoute: "/monitoring",
+    tunnelRoute: '/monitoring',
 
     // Hides source maps from generated client bundles
     hideSourceMaps: true,
