@@ -1,4 +1,4 @@
-# Tweedder
+# Wenlaunch Web3 calendar
 
 This is a Next.js ver 13 app using the `/app` directory.
 It is an event calendar app, where users can submit, read and browse upcoming web3 events and releases.
