@@ -20,7 +20,7 @@ export default async function Banner() {
   }
 
   // Pick out the needed fields
-  const { project_launch_datetime, title, description, project_rating, project_mint_price, slug, project_mint_link, project_mint_ended, categories, networks, marketplace_links, token_supply, project_launch_datetime_string } = data
+  const { project_launch_datetime, title, description, project_mint_price, slug, project_mint_link, project_mint_ended, categories, networks, marketplace_links, token_supply, project_launch_datetime_string } = data
 
   // format launch date
   const releaseDate = project_launch_datetime_string ? formatReleaseDate(project_launch_datetime_string) : project_launch_datetime ? formatReleaseDate(project_launch_datetime) : ""
